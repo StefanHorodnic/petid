@@ -1,7 +1,5 @@
 package com.petid.petid.models;
 
-import com.sun.istack.NotNull;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
