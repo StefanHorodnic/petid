@@ -1,4 +1,4 @@
-package com.petid.petid.models;
+package com.petid.petid.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,11 +7,10 @@ import javax.validation.constraints.NotNull;
 
 @Table
 @Entity
-public class OwnerAnimal {
+
+public class AnimalRecordType {
     @Id
     private int id;
     @NotNull
-    private int ownerId;
-    @NotNull
-    private int animalId;
+    private String name; /*Vaccinare Deparazitare Interventie chirurgicala Comentariu*/
 }

@@ -1,4 +1,4 @@
-package com.petid.petid.models;
+package com.petid.petid.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
