@@ -2,15 +2,16 @@ package com.petid.petid.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-public class Animal implements Serializable {
+public class Animal{
+
+    //Fields
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotNull
     private String name;
@@ -36,6 +37,9 @@ public class Animal implements Serializable {
     private int createdByMedicId;
     @Transient
     private List<AnimalRecord> records;
+
+
+    //Getters and setters
 
     public int getId() {
         return id;
@@ -133,7 +137,9 @@ public class Animal implements Serializable {
         this.createdByMedicId = createdByMedicId;
     }
 
-    public Animal(){
+    //Constructors
+
+    public Animal() {
 
     }
 
@@ -152,6 +158,9 @@ public class Animal implements Serializable {
         this.createdByMedicId = createdByMedicId;
     }
 
+
+    //Public methods
+
     @Override
     public String toString() {
         return "Animal{" +
@@ -166,7 +175,7 @@ public class Animal implements Serializable {
                 ", distinctiveMarks='" + distinctiveMarks + '\'' +
                 ", microchip='" + microchip + '\'' +
                 ", createdDateTime=" + createdDateTime +
-                ", createdByMedicId=" + createdByMedicId+
+                ", createdByMedicId=" + createdByMedicId +
                 '}';
     }
 }

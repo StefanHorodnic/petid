@@ -15,7 +15,7 @@ public class Owner{
     @NotNull
     private int personId;
     @NotNull
-    private String userId;
+    private int userId;
     @Transient
     private List<Animal> animals;
 }

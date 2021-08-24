@@ -16,7 +16,7 @@ public class Medic{
     @NotNull
     private int personId;
     @NotNull
-    private String userId;
+    private int userId;
     @NotNull
     private String stampNumber;
     @Transient

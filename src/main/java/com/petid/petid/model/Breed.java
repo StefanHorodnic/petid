@@ -11,7 +11,7 @@ public class Breed {
     @Id
     private int id;
     @NotNull
-    private String speciesId;
+    private int speciesId;
     @NotNull
     private String name;
 }

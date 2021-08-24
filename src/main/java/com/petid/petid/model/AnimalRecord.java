@@ -16,7 +16,7 @@ public class AnimalRecord {
     @NotNull
     private int date;
     @NotNull
-    private String animalRecordTypeId;
+    private int animalRecordTypeId;
     @NotNull
     private String comment;
     @NotNull

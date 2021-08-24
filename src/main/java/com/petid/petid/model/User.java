@@ -5,7 +5,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 
 @Table
 @Entity
@@ -15,7 +14,7 @@ public class User {
     @NotNull
     private String name;
     @NotNull
-    private HashSet Hash;
+    private String password;
     @NotNull
     private LocalDateTime createdDateTime;
 }

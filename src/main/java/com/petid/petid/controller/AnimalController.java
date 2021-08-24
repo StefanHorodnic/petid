@@ -27,13 +27,13 @@ public class AnimalController {
     }
 
     @GetMapping("/find/{id}")
-    public ResponseEntity<Animal> getAnimalById(@PathVariable("id") int id){
+    public ResponseEntity<Animal> getAnimalById(@PathVariable("id") int id) {
         Animal animal = animalService.findAnimalbyId(id);
         return new ResponseEntity<>(animal, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Animal> addAnimal(@RequestBody Animal animal){
+    public ResponseEntity<Animal> addAnimal(@RequestBody Animal animal) {
         Animal newAnimal = animalService.addAnimal(animal);
         return new ResponseEntity<>(newAnimal, HttpStatus.CREATED);
     }
