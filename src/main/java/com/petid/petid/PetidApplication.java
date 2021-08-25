@@ -1,6 +1,5 @@
 package com.petid.petid;
 
-import com.petid.petid.model.Animal;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
