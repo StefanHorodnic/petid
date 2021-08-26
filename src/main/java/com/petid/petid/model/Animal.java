@@ -1,5 +1,8 @@
 package com.petid.petid.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -16,6 +19,7 @@ public class Animal{
     @NotNull
     private String name;
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
     @NotNull
     private int sexId;
@@ -24,7 +28,7 @@ public class Animal{
     @NotNull
     private int breedId;
     @NotNull
-    private String hormonalState;
+    private int hormonalStateId;
     @NotNull
     private String color;
     @NotNull
@@ -32,6 +36,7 @@ public class Animal{
     @NotNull
     private String microchip;
     @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDateTime;
     @NotNull
     private int createdByMedicId;
@@ -89,12 +94,12 @@ public class Animal{
         this.breedId = breedId;
     }
 
-    public String getHormonalState() {
-        return hormonalState;
+    public int getHormonalStateId() {
+        return hormonalStateId;
     }
 
-    public void setHormonalState(String hormonalState) {
-        this.hormonalState = hormonalState;
+    public void setHormonalStateId(int hormonalStateId) {
+        this.hormonalStateId = hormonalStateId;
     }
 
     public String getColor() {
@@ -143,14 +148,14 @@ public class Animal{
 
     }
 
-    public Animal(int id, String name, LocalDate dateOfBirth, int sexId, int speciesId, int breedId, String hormonalState, String color, String distinctiveMarks, String microchip, LocalDateTime createdDateTime, int createdByMedicId) {
+    public Animal(int id, String name, LocalDate dateOfBirth, int sexId, int speciesId, int breedId, int hormonalState, String color, String distinctiveMarks, String microchip, LocalDateTime createdDateTime, int createdByMedicId) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.sexId = sexId;
         this.speciesId = speciesId;
         this.breedId = breedId;
-        this.hormonalState = hormonalState;
+        this.hormonalStateId = hormonalState;
         this.color = color;
         this.distinctiveMarks = distinctiveMarks;
         this.microchip = microchip;
@@ -170,7 +175,7 @@ public class Animal{
                 ", sexId=" + sexId +
                 ", speciesId=" + speciesId +
                 ", breedId=" + breedId +
-                ", hormonalState='" + hormonalState + '\'' +
+                ", hormonalState='" + hormonalStateId + '\'' +
                 ", color='" + color + '\'' +
                 ", distinctiveMarks='" + distinctiveMarks + '\'' +
                 ", microchip='" + microchip + '\'' +
