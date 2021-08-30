@@ -56,12 +56,14 @@
                         <div class="form-group">
                             <label for="sex">Sex</label>
                             <select type="text" class="form-control" th:field="*{sexId}" id="sex">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label>Specia</label>
                             <select class="form-control" th:field="*{speciesId}">
-                                <option value="-1">Alege o specie</option>>
+                                <option value="-1">Alege o specie</option>
                                 <option th:each="species : ${allSpecies}"
                                         th:value="${species.id}"
                                         th:text="${species.name}">
@@ -70,11 +72,34 @@
                         <div class="form-group">
                             <label for="breed">Rasa</label>
                             <select type="text" class="form-control" th:field="*{breedId}" id="breed">
+                                <option value="-1">Alege o rasă</option>>
+                                <option th:each="breed : ${allBreeds}"
+                                        th:value="${breed.id}"
+                                        th:text="${breed.name}">
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="hormonalState">Status hormonal</label>
+                            <select type="text" class="form-control" th:field="*{hormonalStateId}" id="hormonalState">
+                                <option value="1">1</option>>
+                                <option value="2">2</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="color">Culoare</label>
+                            <input type="text" class="form-control" th:field="*{color}" id="color">
+                        </div>
+                        <div class="form-group">
+                            <label for="distinctiveMarks">Semne distinctive</label>
+                            <input type="text" class="form-control" th:field="*{distinctiveMarks}" id="distinctiveMarks">
                         </div>
                         <div class="form-group">
                             <label for="microchip">Microcip</label>
                             <input type="text" class="form-control" th:field="*{microchip}" id="microchip">
+                        </div>
+                        <div class="form-group">
+                            <label for="medic">Medic</label>
+                            <input type="text" class="form-control" th:field="*{createdByMedicId}" id="medic">
                         </div>
                         <div class="form-group">
                             <input type="submit" value="Adaugă">

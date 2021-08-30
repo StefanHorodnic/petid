@@ -11,14 +11,9 @@ import java.util.List;
 public class AnimalService {
 
     //Fields
-    private final AnimalRepository animalRepository;
-
-
-    //Constructor
     @Autowired
-    public AnimalService(AnimalRepository animalRepository) {
-        this.animalRepository = animalRepository;
-    }
+    private AnimalRepository animalRepository;
+
 
     //Public methods
     public Animal addAnimal(Animal animal){

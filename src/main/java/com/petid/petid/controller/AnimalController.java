@@ -2,6 +2,7 @@ package com.petid.petid.controller;
 
 import com.petid.petid.model.Animal;
 import com.petid.petid.service.AnimalService;
+import com.petid.petid.service.BreedService;
 import com.petid.petid.service.SpeciesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,13 +17,15 @@ public class AnimalController {
 
     @Autowired
     private AnimalService animalService;
-
     @Autowired
     private SpeciesService speciesService;
+    @Autowired
+    private BreedService breedService;
 
     @GetMapping(value={"/","/animal"})
     public String showAddForm(Animal animal, Model model) {
         model.addAttribute("allSpecies", speciesService.findAllSpecies());
+        model.addAttribute("allBreeds", breedService.findAllBreeds());
         return "animal";
     }
 
@@ -36,7 +39,7 @@ public class AnimalController {
     public String addAnimal(@Valid Animal animal, BindingResult result, Model model) {
 
         if (result.hasErrors()) {
-            return "index";
+            return "/animal";
         }
 
         animalService.addAnimal(animal);

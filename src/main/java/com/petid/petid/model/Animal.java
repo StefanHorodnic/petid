@@ -36,6 +36,7 @@ public class Animal{
     @NotNull
     private String microchip;
     @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDateTime;
     @NotNull
