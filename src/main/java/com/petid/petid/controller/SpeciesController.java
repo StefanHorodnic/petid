@@ -4,29 +4,32 @@ import com.petid.petid.service.SpeciesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/species")
+@RequestMapping
 public class SpeciesController {
 
     //Fields
+    @Autowired
     private final SpeciesService speciesService;
 
     //Constructor
-    @Autowired
     public SpeciesController(SpeciesService speciesService) {
         this.speciesService = speciesService;
     }
 
     //Public methods
-    @GetMapping("/allSpecies")
-    public String getAllSpecies(Model model) {
-        model.addAttribute("allSpecies", speciesService.findAllSpecies());
-        return "allSpecies";
-    }
+//    @ModelAttribute("allSpecies")
+//    public List<Species> getAllSpecies(Model model) {
+//        return speciesService.findAllSpecies();
+//    }
+//
+//    @RequestMapping(value = "/species/all", method = RequestMethod.GET)
+//    public ResponseEntity<List<Species>> getAllSpecies() {
+//        List<Species> animals = speciesService.findAllSpecies();
+//        return new ResponseEntity<>(animals, HttpStatus.OK);
+//    }
 
 
 }

@@ -2,6 +2,7 @@ package com.petid.petid.controller;
 
 import com.petid.petid.model.Animal;
 import com.petid.petid.service.AnimalService;
+import com.petid.petid.service.SpeciesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,19 +15,19 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/animal")
 public class AnimalController {
 
-    private final AnimalService animalService;
+    @Autowired
+    private AnimalService animalService;
 
     @Autowired
-    public AnimalController(AnimalService animalService) {
-        this.animalService = animalService;
+    private SpeciesService speciesService;
 
-    }
+    @GetMapping("/addAnimalForm")
+    public String showAddForm(Animal animal, Model model) {
 
-    @GetMapping("/addform")
-    public String showAddForm(Animal animal) {
+        model.addAttribute("allSpecies", speciesService.findAllSpecies());
+
         return "animal/add";
     }
 
@@ -35,25 +36,27 @@ public class AnimalController {
 //        List<Animal> animals = animalService.findAllAnimals();
 //        return new ResponseEntity<>(animals, HttpStatus.OK);
 //    }
-    @GetMapping("/all")
+    @GetMapping("/allAnimals")
     public String getAllAnimals(Model model) {
         model.addAttribute("animals", animalService.findAllAnimals());
-        return "all";
+        return "allAnimals";
     }
 
-    @GetMapping("/find/{id}")
-    public ResponseEntity<Animal> getAnimalById(@PathVariable("id") int id) {
-        Animal animal = animalService.findAnimalbyId(id);
-        return new ResponseEntity<>(animal, HttpStatus.OK);
-    }
+//    @GetMapping("/find/{id}")
+//    public ResponseEntity<Animal> getAnimalById(@PathVariable("id") int id) {
+//        Animal animal = animalService.findAnimalbyId(id);
+//        return new ResponseEntity<>(animal, HttpStatus.OK);
+//    }
 
     //    @PostMapping("/add")
 //    public ResponseEntity<Animal> addAnimal(@RequestBody Animal animal) {
 //        Animal newAnimal = animalService.addAnimal(animal);
 //        return new ResponseEntity<>(newAnimal, HttpStatus.CREATED);
 //    }
-    @PostMapping("/add")
+
+    @PostMapping("/addAnimal")
     public String addAnimal(@Valid Animal animal, BindingResult result, Model model) {
+
         if (result.hasErrors()) {
             return "animal/add";
         }
