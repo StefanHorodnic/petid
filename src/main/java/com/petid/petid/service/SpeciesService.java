@@ -1,6 +1,5 @@
 package com.petid.petid.service;
 
-import com.petid.petid.model.Animal;
 import com.petid.petid.model.Species;
 import com.petid.petid.repository.SpeciesRepository;
 import org.springframework.beans.factory.annotation.Autowired;

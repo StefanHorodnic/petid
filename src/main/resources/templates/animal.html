@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Title</title>
+</head>
+<body>
+<div th:switch="${animals}">
+    <h2 th:case="null">Nu sunt animale în baza de date!</h2>
+    <div th:case="*">
+        <h2>Animals</h2>
+
+        <table class="table">
+            <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Microchip</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="animal : ${animals}">
+                <td th:text="${animal.name}"></td>
+                <td th:text="${animal.email}"></td>
+<!--                <td><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></td>-->
+<!--                <td><a th:href="@{/delete/{id}(id=${user.id})}">Delete</a></td>-->
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal" id="addAnimalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <form class="md-form mb-5" th:action="@{/addAnimal}" th:object="${animal}" method="post">
+                        <div class="form-group">
+                            <label for="name">Nume</label>
+                            <input type="text" class="form-control" th:field="*{name}" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="dateOfBirth">Data nașterii</label>
+                            <input type="date" class="form-control" th:field="*{dateOfBirth}" id="dateOfBirth">
+                        </div>
+                        <div class="form-group">
+                            <label for="sex">Sex</label>
+                            <select type="text" class="form-control" th:field="*{sexId}" id="sex">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Specia</label>
+                            <select class="form-control" th:field="*{speciesId}">
+                                <option value="-1">Alege o specie</option>>
+                                <option th:each="species : ${allSpecies}"
+                                        th:value="${species.id}"
+                                        th:text="${species.name}">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="breed">Rasa</label>
+                            <select type="text" class="form-control" th:field="*{breedId}" id="breed">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="microchip">Microcip</label>
+                            <input type="text" class="form-control" th:field="*{microchip}" id="microchip">
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Adaugă">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAnimalModal">
+        Adaugă animal
+    </button>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
