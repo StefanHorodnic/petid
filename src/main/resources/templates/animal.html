@@ -70,8 +70,8 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="breed">Rasa</label>
-                            <select type="text" class="form-control" th:field="*{breedId}" id="breed">
+                            <label>Rasa</label>
+                            <select class="form-control" th:field="*{breedId}">
                                 <option value="-1">Alege o rasă</option>>
                                 <option th:each="breed : ${allBreeds}"
                                         th:value="${breed.id}"
