@@ -33,6 +33,7 @@ public class AnimalController {
         return "animal";
     }
 
+
     @GetMapping("/allAnimals")
     public String getAllAnimals(Model model) {
         model.addAttribute("animals", animalService.findAllAnimals());

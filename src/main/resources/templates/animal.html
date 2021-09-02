@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:replace="header :: header"></head>
+<head th:replace="fragments/head :: head"></head>
 
 <body>
+<div th:replace="fragments/navigation :: navigation"/>
 <div th:switch="${animals}">
     <h2 th:case="null">Nu sunt animale în baza de date!</h2>
     <div th:case="*">
@@ -20,8 +21,6 @@
             <tr th:each="animal : ${animals}">
                 <td th:text="${animal.name}"></td>
                 <td th:text="${animal.email}"></td>
-<!--                <td><a th:href="@{/edit/{id}(id=${user.id})}">Edit</a></td>-->
-<!--                <td><a th:href="@{/delete/{id}(id=${user.id})}">Delete</a></td>-->
             </tr>
             </tbody>
         </table>
