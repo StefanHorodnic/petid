@@ -3,10 +3,8 @@ package com.petid.petid.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import java.time.LocalDateTime;
 
-@Table
 @Entity
 public class Person {
 
