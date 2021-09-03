@@ -28,11 +28,10 @@ public class AnimalController {
     @GetMapping(value={"/","/animal"})
     public String showAddForm(Animal animal, Model model) {
         model.addAttribute("allSpecies", speciesService.findAllSpecies());
-        model.addAttribute("allBreeds", breedService.findAllBreeds());
+        //model.addAttribute("allBreeds", breedService.findAllBreeds());
         model.addAttribute("allSexes", sexService.findAll());
-        return "animal";
+        return "/animal";
     }
-
 
     @GetMapping("/allAnimals")
     public String getAllAnimals(Model model) {
