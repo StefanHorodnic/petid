@@ -1,7 +1,6 @@
 package com.petid.petid.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -28,7 +27,7 @@ public class Animal{
     @NotNull
     private int breedId;
     @NotNull
-    private int hormonalStateId;
+    private boolean neutered;
     @NotNull
     private String color;
     @NotNull
@@ -95,12 +94,12 @@ public class Animal{
         this.breedId = breedId;
     }
 
-    public int getHormonalStateId() {
-        return hormonalStateId;
+    public boolean isNeutered() {
+        return neutered;
     }
 
-    public void setHormonalStateId(int hormonalStateId) {
-        this.hormonalStateId = hormonalStateId;
+    public void setNeutered(boolean neutered) {
+        this.neutered = neutered;
     }
 
     public String getColor() {
@@ -149,14 +148,14 @@ public class Animal{
 
     }
 
-    public Animal(int id, String name, LocalDate dateOfBirth, int sexId, int speciesId, int breedId, int hormonalState, String color, String distinctiveMarks, String microchip, LocalDateTime createdDateTime, int createdByMedicId) {
+    public Animal(int id, String name, LocalDate dateOfBirth, int sexId, int speciesId, int breedId, boolean hormonalState, String color, String distinctiveMarks, String microchip, LocalDateTime createdDateTime, int createdByMedicId) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.sexId = sexId;
         this.speciesId = speciesId;
         this.breedId = breedId;
-        this.hormonalStateId = hormonalState;
+        this.neutered = hormonalState;
         this.color = color;
         this.distinctiveMarks = distinctiveMarks;
         this.microchip = microchip;
@@ -176,7 +175,7 @@ public class Animal{
                 ", sexId=" + sexId +
                 ", speciesId=" + speciesId +
                 ", breedId=" + breedId +
-                ", hormonalState='" + hormonalStateId + '\'' +
+                ", hormonalState='" + neutered + '\'' +
                 ", color='" + color + '\'' +
                 ", distinctiveMarks='" + distinctiveMarks + '\'' +
                 ", microchip='" + microchip + '\'' +

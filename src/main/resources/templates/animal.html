@@ -25,92 +25,83 @@
             </tbody>
         </table>
     </div>
-    <div class="modal" id="addAnimalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal" id="addAnimalModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                    <h5 class="modal-title" id="modalTitle">Adaugă un animal nou</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="false">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body mx-3">
-                    <form class="md-form mb-5" th:action="@{/addAnimal}" th:object="${animal}" method="post">
-                        <div class="form-group">
+                <div class="modal-body">
+                    <form class="container" th:action="@{/addAnimal}" th:object="${animal}" method="post">
+                        <div class="form-group row">
                             <label for="name">Nume</label>
                             <input type="text" class="form-control" th:field="*{name}" id="name">
                         </div>
-                        <div class="form-group">
-                            <label for="dateOfBirth">Data nașterii</label>
-                            <input type="date" class="form-control" th:field="*{dateOfBirth}" id="dateOfBirth">
-                        </div>
-                        <div class="form-group">
-                            <label>Sex</label>
-                            <select class="form-control" th:field="*{sexId}" >
-                                <option th:each="sex : ${allSexes}"
-                                        th:value="${sex.id}"
-                                        th:text="${sex.name}">
-
-                            </select>
+                        <div class="row">
+                            <label for="microchipText">Microcip</label>
+                            <input type="text" class="form-control" th:field="*{microchip}" id="microchipText">
                         </div>
                         <script type="text/javascript">
                             function getSelectedSpeciesId() {
-                                $.get("/breedBySpeciesId?speciesId="+$("#speciesSelect").val(), function(data){
-                                    $("breedSelect").empty();
-                                    $.each(data, function(key, value){
-                                        for(var i in value){
-                                            //alert(i);
-                                            //alert(value[i])
-                                            var option = "<option value = " + i + ">" + value[i] +  "</option>";
-                                            $("breedSelect").append(option);
-
-                                        }
-
-                                   });
-                                });
+                                $("#breedSelect").empty();
+                                var speciesId = $("#speciesSelect").val();
+                                if(speciesId < 1){
+                                    $("#breedSelect").prop("disabled", true);
+                                }
+                                else{
+                                    $.get("/breedBySpeciesId?speciesId=" + speciesId, function(data){
+                                        $("#breedSelect").prop("disabled", false);
+                                        $.each(data, function(key, value){
+                                            var option = "<option value = " + key + ">" + value +  "</option>";
+                                            $("#breedSelect").append(option);
+                                        });
+                                    });
+                                }
                             };
                         </script>
-                        <div class="form-group">
-                            <label>Specia</label>
+                        <div class="row">
+                            <label for="speciesSelect">Specia</label>
                             <select id="speciesSelect" class="form-control" th:onchange="getSelectedSpeciesId()" th:field="*{speciesId}">
                                 <option th:each="species : ${allSpecies}"
                                         th:value="${species.id}"
                                         th:text="${species.name}">
                             </select>
                         </div>
-                        <div class="form-group">
-                            <label>Rasa</label>
-                            <select id="breedSelect" class="form-control" th:field="*{breedId}">
-                                <option th:each="breed : ${breedsBySpeciesId}"
-                                        th:value="${breed.id}"
-                                        th:text="${breed.name}">
-                            </select>
+                        <div class="row">
+                            <label for="breedSelect">Rasa</label>
+                            <select id="breedSelect" class="form-control" th:field="*{breedId}" disabled></select>
                         </div>
-                        <div class="form-group">
-                            <label for="hormonalState">Status hormonal</label>
-                            <select type="text" class="form-control" th:field="*{hormonalStateId}" id="hormonalState">
-                                <option value="1">1</option>>
-                                <option value="2">2</option>
-                            </select>
+                        <div class="row">
+                            <label for="dateOfBirth">Data nașterii</label>
+                            <input type="date" class="form-control" th:field="*{dateOfBirth}" id="dateOfBirth">
                         </div>
-                        <div class="form-group">
-                            <label for="color">Culoare</label>
-                            <input type="text" class="form-control" th:field="*{color}" id="color">
+                        <div class="form-group row">
+                            <div class="col">
+                                <label for="sexSelect">Sex</label>
+                                <select id="sexSelect" class="form-control" th:field="*{sexId}" >
+                                    <option th:each="sex : ${allSexes}"
+                                            th:value="${sex.id}"
+                                            th:text="${sex.name}">
+                                </select>
+                            </div>
+                            <div class="col">
+                                <label for="neuteredCheckBox">Sterilizat(ă)</label>
+                                <input type="checkbox" class="form-check-input" th:field="*{neutered}" id="neuteredCheckBox"/>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="distinctiveMarks">Semne distinctive</label>
-                            <input type="text" class="form-control" th:field="*{distinctiveMarks}" id="distinctiveMarks">
+                        <div class="row">
+                            <label for="colorText">Culoare</label>
+                            <input type="text" class="form-control" th:field="*{color}" id="colorText">
                         </div>
-                        <div class="form-group">
-                            <label for="microchip">Microcip</label>
-                            <input type="text" class="form-control" th:field="*{microchip}" id="microchip">
+                        <div class="row">
+                            <label for="distinctiveMarksText">Semne distinctive</label>
+                            <input type="text" class="form-control" th:field="*{distinctiveMarks}" id="distinctiveMarksText">
                         </div>
-                        <div class="form-group">
-                            <label for="medic">Medic</label>
-                            <input type="text" class="form-control" th:field="*{createdByMedicId}" id="medic">
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Adaugă">
+                        <div class="row justify-content-center">
+                            <button class="btn btn-primary" type="submit">Adaugă</button>
                         </div>
                     </form>
                 </div>
@@ -118,13 +109,8 @@
         </div>
     </div>
     <button  type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAnimalModal">
-        <i class="fas fa-birthday-cake"></i>>
         Adaugă animal
     </button>
 </div>
-
-<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </body>
 </html>
