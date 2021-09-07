@@ -14,11 +14,11 @@ public class SpeciesService {
     private SpeciesRepository speciesRepository;
 
 
-    public List<Species> findAllSpecies(){
+    public List<Species> findAll(){
         return speciesRepository.findAll();
     }
 
-    public Species findSpeciesById(int id){
+    public Species findById(int id){
         return speciesRepository.findById(id).orElseThrow();
     }
 }

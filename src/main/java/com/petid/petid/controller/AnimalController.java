@@ -24,7 +24,7 @@ public class AnimalController {
 
     @GetMapping(value={"/animal"})
     public String showAddForm(Animal animal, Model model) {
-        model.addAttribute("allSpecies", speciesService.findAllSpecies());
+        model.addAttribute("allSpecies", speciesService.findAll());
         model.addAttribute("allSexes", sexService.findAll());
         return "/animal";
     }

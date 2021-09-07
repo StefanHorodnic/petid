@@ -22,8 +22,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select stampnumber, password, true from user where stampnumber=?")
-                .authoritiesByUsernameQuery("select stampnumber, 'ROLE_USER' from user where stampnumber=?")
+                .usersByUsernameQuery("select stamp_number, password, true from user where stamp_number=?")
+                .authoritiesByUsernameQuery("select stamp_number, 'ROLE_USER' from user where stamp_number=?")
                 .passwordEncoder(passwordEncoder());
     }
 
@@ -34,9 +34,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        http.authorizeRequests().anyRequest().authenticated().and()
-                .formLogin()
+        http.authorizeRequests()
+                .antMatchers("/resources/**").permitAll()
+                .anyRequest().authenticated().and().formLogin()
                 .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/index", true)
                 .failureUrl("/login-error")
                 .and()
                 .logout()

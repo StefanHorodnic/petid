@@ -8,9 +8,6 @@ import java.time.LocalDateTime;
 public class User{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer Id;
-    @NotNull
     private String stampNumber;
     @NotNull
     private String password;

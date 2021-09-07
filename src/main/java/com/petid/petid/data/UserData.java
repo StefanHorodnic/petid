@@ -2,6 +2,7 @@ package com.petid.petid.data;
 
 import com.petid.petid.model.User;
 import com.petid.petid.repository.UserRepository;
+import com.petid.petid.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -11,11 +12,11 @@ import org.springframework.stereotype.Component;
 public class UserData {
 
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
-        userRepository.save(new User("123", "stefan"));
-        userRepository.save(new User("456","andrei"));
+        userService.save(new User("123", "stefan"));
+        userService.save(new User("456","andrei"));
     }
 }
