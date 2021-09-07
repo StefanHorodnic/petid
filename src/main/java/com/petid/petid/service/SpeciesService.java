@@ -10,16 +10,9 @@ import java.util.List;
 @Service
 public class SpeciesService {
 
-    //Fields
-    private final SpeciesRepository speciesRepository;
-
-    //Constructor
     @Autowired
-    public SpeciesService(SpeciesRepository speciesRepository) {
-        this.speciesRepository = speciesRepository;
-    }
+    private SpeciesRepository speciesRepository;
 
-    //Public methods
 
     public List<Species> findAllSpecies(){
         return speciesRepository.findAll();

@@ -14,6 +14,7 @@ public class BreedData {
     private BreedRepository breedRepository;
 
 
+    //For demo purposes speciesId: 1 - Canine; 2 - Feline
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
         breedRepository.save(new Breed(1, "Ciobănesc german"));
