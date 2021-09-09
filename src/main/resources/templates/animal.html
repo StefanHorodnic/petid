@@ -20,7 +20,6 @@
 </head>
 
 <body>
-<div th:replace="fragments/navigation :: navigation"/>
 <div th:switch="${animals}">
     <h2 th:case="null">Nu sunt animale în baza de date!</h2>
     <div th:case="*">

@@ -1,7 +1,6 @@
 package com.petid.petid.data;
 
 import com.petid.petid.model.User;
-import com.petid.petid.repository.UserRepository;
 import com.petid.petid.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
