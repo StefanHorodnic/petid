@@ -15,7 +15,7 @@ public class UserData {
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
-        userService.save(new User("123", "stefan"));
-        userService.save(new User("456","andrei"));
+        userService.save(new User("123", "stefan", "Ștefan Horodnic"));
+        userService.save(new User("456","andrei", "Andrei Porgras"));
     }
 }

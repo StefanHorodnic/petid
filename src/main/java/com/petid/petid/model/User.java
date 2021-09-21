@@ -12,6 +12,8 @@ public class User{
     @NotNull
     private String password;
     @NotNull
+    private String name;
+    @NotNull
     private LocalDateTime createdDateTime;
 
     public String getStampNumber() {
@@ -30,12 +32,21 @@ public class User{
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public User() {
     }
 
-    public User(String stampNumber, String password) {
+    public User(String stampNumber, String password, String name) {
         this.stampNumber = stampNumber;
         this.password = password;
+        this.name = name;
         this.createdDateTime = LocalDateTime.now();
     }
 }

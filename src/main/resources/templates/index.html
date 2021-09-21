@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -13,16 +14,27 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>PetId</title>
+    <title>PetID</title>
 
     <link rel="icon" href="https://img.icons8.com/dusk/50/000000/pets.png"/>
 </head>
-
-<div class="bg-image"
-     style="background-image: url('https://i.guim.co.uk/img/media/03734ee186eba543fb3d0e35db2a90a14a5d79e3/0_173_5200_3120/master/5200.jpg?width=1200&height=900&quality=85&auto=format&fit=crop&s=9c30ed97ea8731f3e2a155467201afe3');
-        height: 100vh; background-repeat: no-repeat !important; background-size: cover !important; background-position: center;">
-    <a th:href="@{animal}">Mergi la pagina cu animale</a>
-</div>
+<body>
+<nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+        <img src="https://img.icons8.com/dusk/60/000000/pets.png">
+        <h2>PetID</h2>
+        <div class="btn-group">
+            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="https://img.icons8.com/ios-glyphs/30/000000/user--v1.png"/>
+                <span sec:authentication="principal.name"/>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Editează</a>
+                <a class="dropdown-item" href="#">Delogare</a>
+            </div>
+        </div>
+    </div>
+</nav>
 
 </body>
 </html>

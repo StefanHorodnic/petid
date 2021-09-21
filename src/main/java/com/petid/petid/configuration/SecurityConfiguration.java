@@ -1,12 +1,15 @@
 package com.petid.petid.configuration;
 
+import com.petid.petid.userdetails.UserDetailsServiceClass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -19,12 +22,26 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return new UserDetailsServiceClass();
+    }
+
+    @Bean
+    //Data access object(dao)
+    public DaoAuthenticationProvider authenticationProvider(){
+
+            DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+            authenticationProvider.setUserDetailsService(userDetailsService());
+            authenticationProvider.setPasswordEncoder(passwordEncoder());
+
+            return authenticationProvider;
+    }
+
+
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select stamp_number, password, true from user where stamp_number=?")
-                .authoritiesByUsernameQuery("select stamp_number, 'ROLE_USER' from user where stamp_number=?")
-                .passwordEncoder(passwordEncoder());
+        auth.authenticationProvider(authenticationProvider());
     }
 
     @Bean
