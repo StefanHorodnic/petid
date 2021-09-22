@@ -7,7 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-public class UserDetailsServiceClass implements UserDetailsService {
+public class UserDetailsServiceCustom implements UserDetailsService {
 
     @Autowired
     UserRepository userRepository;
@@ -18,9 +18,9 @@ public class UserDetailsServiceClass implements UserDetailsService {
         User user = userRepository.getUserByStampNumber(stampNumber);
 
         if (user == null) {
-            throw new UsernameNotFoundException("Could not find user with that email");
+            throw new UsernameNotFoundException("Could not find user with that stamp number");
         }
 
-        return new UserDetailsClass(user);
+        return new UserDetailsCustom(user);
     }
 }
