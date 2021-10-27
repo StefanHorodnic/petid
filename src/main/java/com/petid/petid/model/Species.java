@@ -1,40 +1,51 @@
 package com.petid.petid.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Species {
 
-    //Fields
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @NotNull
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
     @NotNull
     private String name;
+    @OneToMany(mappedBy = "species")
+    private List<Breed> breeds;
+    @OneToMany(mappedBy = "species")
+    private List<Animal> animals;
 
-    //Getter and setter
-    public int getId() {
+    public UUID getId() {
         return id;
-    }
-    public void setId(int id) {
-        this.id = id;
     }
     public String getName() {
         return name;
     }
-    public void setName(String name) {
-        this.name = name;
+    public List<Breed> getBreeds(){
+        List<Breed> buffer = new ArrayList<>();
+        buffer.addAll(breeds);
+        return buffer;
+    }
+    public List<Animal> getAnimals(){
+        List<Animal> buffer = new ArrayList<>();
+        buffer.addAll(animals);
+        return buffer;
     }
 
-    //Constructors
     public Species(String name) {
         this.name = name;
     }
 
     public Species() {
+
+    }
+
+    public void addBreed(Breed breed){
+        this.breeds.add(breed);
     }
 }

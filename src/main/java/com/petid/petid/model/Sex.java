@@ -10,7 +10,7 @@ public class Sex {
     @Id
     private int id;
     @NotNull
-    private String name; /* Femela Mascul*/
+    private String name;
 
     //getter and setter
     public int getId() {

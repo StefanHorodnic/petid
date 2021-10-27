@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class SpeciesService {
@@ -18,7 +19,7 @@ public class SpeciesService {
         return speciesRepository.findAll();
     }
 
-    public Species findById(int id){
+    public Species findById(UUID id){
         return speciesRepository.findById(id).orElseThrow();
     }
 }

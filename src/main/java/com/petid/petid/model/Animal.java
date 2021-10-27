@@ -11,7 +11,6 @@ import java.util.List;
 @Entity
 public class Animal{
 
-    //Fields
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -22,10 +21,10 @@ public class Animal{
     private LocalDate dateOfBirth;
     @NotNull
     private int sexId;
-    @NotNull
-    private int speciesId;
-    @NotNull
-    private int breedId;
+    @ManyToOne
+    private Species species;
+    @ManyToOne
+    private Breed breed;
     @NotNull
     private boolean neutered;
     @NotNull
@@ -78,20 +77,20 @@ public class Animal{
         this.sexId = sexId;
     }
 
-    public int getSpeciesId() {
-        return speciesId;
+    public Species getSpecies() {
+        return species;
     }
 
-    public void setSpeciesId(int speciesId) {
-        this.speciesId = speciesId;
+    public void setSpecies(Species species) {
+        this.species = species;
     }
 
-    public int getBreedId() {
-        return breedId;
+    public Breed getBreed() {
+        return breed;
     }
 
-    public void setBreedId(int breedId) {
-        this.breedId = breedId;
+    public void setBreed(Breed breed) {
+        this.breed = breed;
     }
 
     public boolean isNeutered() {
@@ -148,13 +147,13 @@ public class Animal{
 
     }
 
-    public Animal(int id, String name, LocalDate dateOfBirth, int sexId, int speciesId, int breedId, boolean hormonalState, String color, String distinctiveMarks, String microchip, LocalDateTime createdDateTime, int createdByMedicId) {
+    public Animal(int id, String name, LocalDate dateOfBirth, int sexId, Species species, Breed breed, boolean hormonalState, String color, String distinctiveMarks, String microchip, LocalDateTime createdDateTime, int createdByMedicId) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.sexId = sexId;
-        this.speciesId = speciesId;
-        this.breedId = breedId;
+        this.species = species;
+        this.breed = breed;
         this.neutered = hormonalState;
         this.color = color;
         this.distinctiveMarks = distinctiveMarks;
@@ -173,14 +172,15 @@ public class Animal{
                 ", name='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 ", sexId=" + sexId +
-                ", speciesId=" + speciesId +
-                ", breedId=" + breedId +
-                ", hormonalState='" + neutered + '\'' +
+                ", species=" + species +
+                ", breed=" + breed +
+                ", neutered=" + neutered +
                 ", color='" + color + '\'' +
                 ", distinctiveMarks='" + distinctiveMarks + '\'' +
                 ", microchip='" + microchip + '\'' +
                 ", createdDateTime=" + createdDateTime +
                 ", createdByMedicId=" + createdByMedicId +
+                ", records=" + records +
                 '}';
     }
 }

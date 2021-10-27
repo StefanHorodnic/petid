@@ -17,6 +17,8 @@
     <title>PetId</title>
 
     <link rel="icon" href="https://img.icons8.com/dusk/50/000000/pets.png"/>
+
+    <script type="text/javascript" th:src="@{/js/s.js}"></script>
 </head>
 
 <body>
@@ -65,28 +67,10 @@
                                 <input type="text" class="form-control" th:field="*{microchip}" id="microchipText">
                             </div>
                         </div>
-                        <script type="text/javascript">
-                            function getSelectedSpeciesId() {
-                                $("#breedSelect").empty();
-                                var speciesId = $("#speciesSelect").val();
-                                if(speciesId < 1){
-                                    $("#breedSelect").prop("disabled", true);
-                                }
-                                else{
-                                    $.get("/breedBySpeciesId?speciesId=" + speciesId, function(data){
-                                        $("#breedSelect").prop("disabled", false);
-                                        $.each(data, function(key, value){
-                                            var option = "<option value = " + key + ">" + value +  "</option>";
-                                            $("#breedSelect").append(option);
-                                        });
-                                    });
-                                }
-                            };
-                        </script>
                         <div class="form-row mt-2">
                             <div class="col">
                                 <label for="speciesSelect">Specia</label>
-                                <select id="speciesSelect" class="form-control" th:onchange="getSelectedSpeciesId()" th:field="*{speciesId}">
+                                <select id="speciesSelect" class="form-control" th:onchange="getSelectedSpeciesId()" th:field="*{species}">
                                     <option th:each="species : ${allSpecies}"
                                             th:value="${species.id}"
                                             th:text="${species.name}">
@@ -96,7 +80,7 @@
                         <div class="form-row mt-2">
                             <div class="col">
                                 <label for="breedSelect">Rasa</label>
-                                <select id="breedSelect" class="form-control" th:field="*{breedId}" disabled></select>
+                                <select id="breedSelect" class="form-control" th:field="*{breed}" disabled></select>
                             </div>
                         </div>
                         <div class="form-row mt-2">
