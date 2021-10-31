@@ -1,11 +1,15 @@
 package com.petid.petid.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -17,10 +21,11 @@ public class Animal{
     @NotNull
     private String name;
     @NotNull
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateOfBirth;
     @NotNull
-    private int sexId;
+    @Enumerated(EnumType.ORDINAL)
+    private Sex sex;
     @ManyToOne
     private Species species;
     @ManyToOne
@@ -33,14 +38,14 @@ public class Animal{
     private String distinctiveMarks;
     @NotNull
     private String microchip;
-    @NotNull
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    @CreationTimestamp
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDateTime;
-    @NotNull
     private int createdByMedicId;
     @Transient
     private List<AnimalRecord> records;
+    @Transient
+    private String age;
 
 
     //Getters and setters
@@ -69,12 +74,12 @@ public class Animal{
         this.dateOfBirth = dateOfBirth;
     }
 
-    public int getSexId() {
-        return sexId;
+    public Sex getSex() {
+        return sex;
     }
 
-    public void setSexId(int sexId) {
-        this.sexId = sexId;
+    public void setSex(Sex sex) {
+        this.sex = sex;
     }
 
     public Species getSpecies() {
@@ -141,25 +146,41 @@ public class Animal{
         this.createdByMedicId = createdByMedicId;
     }
 
+    public String getAge() {
+
+        Period period = Period.between(dateOfBirth, LocalDate.now());
+
+        if (period.getDays() < 7)
+        {
+            return period.getDays() + " zile";
+        }
+        else if(period.getMonths() < 3){
+            return period.getDays() / 7 + " săptămâni";
+        }
+        else if(period.getYears() < 1){
+            return period.getMonths() + " luni";
+        }
+        else{
+            return period.getYears() + " ani";
+        }
+    }
+
     //Constructors
 
     public Animal() {
 
     }
 
-    public Animal(int id, String name, LocalDate dateOfBirth, int sexId, Species species, Breed breed, boolean hormonalState, String color, String distinctiveMarks, String microchip, LocalDateTime createdDateTime, int createdByMedicId) {
-        this.id = id;
+    public Animal(String name, LocalDate dateOfBirth, Sex sex, Species species, Breed breed, boolean hormonalState, String color, String distinctiveMarks, String microchip) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
-        this.sexId = sexId;
+        this.sex = sex;
         this.species = species;
         this.breed = breed;
         this.neutered = hormonalState;
         this.color = color;
         this.distinctiveMarks = distinctiveMarks;
         this.microchip = microchip;
-        this.createdDateTime = createdDateTime;
-        this.createdByMedicId = createdByMedicId;
     }
 
 
@@ -171,7 +192,7 @@ public class Animal{
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
-                ", sexId=" + sexId +
+                ", sex=" + sex +
                 ", species=" + species +
                 ", breed=" + breed +
                 ", neutered=" + neutered +

@@ -2,7 +2,6 @@ package com.petid.petid.controller;
 
 import com.petid.petid.model.Animal;
 import com.petid.petid.service.AnimalService;
-import com.petid.petid.service.SexService;
 import com.petid.petid.service.SpeciesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,31 +18,18 @@ public class AnimalController {
     private AnimalService animalService;
     @Autowired
     private SpeciesService speciesService;
-    @Autowired
-    private SexService sexService;
 
-    @GetMapping(value={"/animal"})
-    public String showAddForm(Animal animal, Model model) {
-        model.addAttribute("allSpecies", speciesService.findAll());
-        model.addAttribute("allSexes", sexService.findAll());
-        return "/animal";
-    }
-
-    @GetMapping("/allAnimals")
-    public String getAllAnimals(Model model) {
-        model.addAttribute("animals", animalService.findAllAnimals());
-        return "allAnimals";
-    }
 
     @PostMapping("/addAnimal")
-    public String addAnimal(@Valid Animal animal, BindingResult result, Model model) {
-
-        if (result.hasErrors()) {
-            return "/animal";
-        }
-
+    public String addAnimal(Animal animal) {
         animalService.addAnimal(animal);
+        return "redirect:/index";
+    }
 
-        return "redirect:/animal";
+    @GetMapping(value={"/index"})
+    public String addAnimalForm(Animal animal, Model model) {
+        model.addAttribute("allSpecies", speciesService.findAll());
+        model.addAttribute("animals", animalService.findAllAnimals());
+        return "/index";
     }
 }
