@@ -3,7 +3,7 @@
 		font-family: 'Poppins';
 	}
 
-    .nav div{
+/*    .nav div{
         height: 4px;
         background-color: blue;
         margin: 5px 0;
@@ -27,11 +27,15 @@
     }
     .nav:hover div {
         width: 30px;
-    }
+    }*/
 
 
 	a{
 	    cursor: pointer;
+	}
+
+	.form-check {
+        margin-top: 10px;
 	}
 
     .form-inline {
@@ -64,11 +68,12 @@
 	}
 	.search-box {
         position: relative;
+        width: 300px;
     }
     .search-box input {
 		box-shadow: none;
         padding-right: 35px;
-        border-radius: 3px !important;
+        border-radius: 10px !important;
     }
 	.search-box .input-group-addon {
         min-width: 35px;
@@ -143,9 +148,9 @@
 	.navbar .active a, .navbar .active a:hover, .navbar .active a:focus {
 		background: transparent !important;
 	}
-	@media (min-width: 1200px){
+	/*@media (min-width: 1200px){
 		.form-inline .input-group {
-			width: 300px;
+			width: 100%;
 			margin-left: 30px;
 		}
 	}
@@ -155,6 +160,6 @@
 			margin-bottom: 10px;
 		}
 		.input-group {
-			width: 100%;
+			width: 50%;
 		}
-	}
+	}*/
