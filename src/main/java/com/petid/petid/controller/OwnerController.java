@@ -21,16 +21,8 @@ public class OwnerController {
     @GetMapping("/ownerBySocialSecurityNumber")
     @ResponseBody
     public Owner getOwnerBySocialSecurityNumber(@RequestParam("socialSecurityNumber") String socialSecurityNumber){
-
         Owner owner = new Owner();
-
-        try{
-            owner = ownerService.findBySocialSecurityNumber(socialSecurityNumber);
-        }
-        catch (Exception e){
-
-        }
-
+        owner = ownerService.findBySocialSecurityNumber(socialSecurityNumber);
         return owner;
     }
 

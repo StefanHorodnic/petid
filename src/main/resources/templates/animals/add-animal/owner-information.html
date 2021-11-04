@@ -8,8 +8,10 @@
 </head>
 <body>
     <div th:replace="fragments/navigation :: navigation"></div>
-    <div><h3>Primul pas : Informații despre proprietar</h3></div>
     <div class="container">
+        <div class="row">
+            <h3>Pasul 1 : Informații despre proprietar</h3>
+        </div>
         <div class="row">
             <form id="ownerInformationForm" th:action="@{/add-animal/owner-information}" th:object="${owner}" method="post">
                 <label for="socialSecurityNumber">C.N.P.</label>

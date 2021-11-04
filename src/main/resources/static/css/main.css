@@ -7,6 +7,23 @@
         background-color: #0374ba;
     }
 
+    .container {
+        background-color: #fff;
+    }
+
+    form .btn-primary{
+        margin-top: 20px;
+        float: right;
+    }
+
+    form label{
+        margin-top: 10px;
+    }
+
+    h3{
+        text-align: center;
+    }
+
 	/* Navigation top bar style */
 
     .navbar{
