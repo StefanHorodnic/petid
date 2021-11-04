@@ -1,6 +1,5 @@
 package com.petid.petid.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,15 +8,15 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 public class Animal{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private UUID id;
     @NotNull
     private String name;
     @NotNull
@@ -41,6 +40,8 @@ public class Animal{
     @CreationTimestamp
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDateTime;
+    @ManyToOne
+    private Owner owner;
     private int createdByMedicId;
     @Transient
     private List<AnimalRecord> records;
@@ -50,11 +51,11 @@ public class Animal{
 
     //Getters and setters
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -144,6 +145,14 @@ public class Animal{
 
     public void setCreatedByMedicId(int createdByMedicId) {
         this.createdByMedicId = createdByMedicId;
+    }
+
+    public Owner getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public String getAge() {

@@ -4,12 +4,10 @@ import com.petid.petid.model.*;
 import com.petid.petid.repository.AnimalRepository;
 import com.petid.petid.repository.BreedRepository;
 import com.petid.petid.repository.SpeciesRepository;
-import com.petid.petid.service.AnimalService;
 import com.petid.petid.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;

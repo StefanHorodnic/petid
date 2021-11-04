@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AnimalService {
@@ -28,11 +29,11 @@ public class AnimalService {
         return animalRepository.save(animal);
     }
 
-    public void deleteAnimalbyId(int id){
+    public void deleteAnimalbyId(UUID id){
         animalRepository.deleteById(id);
     }
 
-    public Animal findAnimalbyId(int id){
+    public Animal findAnimalbyId(UUID id){
         return animalRepository.findById(id).orElseThrow();
     }
 
