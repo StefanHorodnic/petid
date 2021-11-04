@@ -22,7 +22,12 @@ public class AnimalController {
     @PostMapping("/addAnimal")
     public String addAnimal(@Valid Animal animal) {
         animalService.addAnimal(animal);
-        return "redirect:/index";
+        return "redirect:/animals";
+    }
+
+    @GetMapping("/add-animal/animal-information")
+    public String ownerInformation(Model model) {
+        return "animals/add-animal/owner-information";
     }
 
     /*@GetMapping(value={"/index"})
