@@ -26,9 +26,10 @@ public class MainController {
 
     @RequestMapping("/index")
     public String index(Model model) {
-        return "/index";
+        return "redirect:/animals";
     }
-
-
-
+    @RequestMapping("/")
+    public String indexEmpty(Model model) {
+        return "redirect:/animals";
+    }
 }

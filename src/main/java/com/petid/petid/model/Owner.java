@@ -17,10 +17,6 @@ public class Owner{
     @NotNull
     private String socialSecurityNumber;
     @NotNull
-    private String idCardSeries;
-    @NotNull
-    private String idCardNumber;
-    @NotNull
     private String address;
     @NotNull
     private String phoneNumber;
@@ -61,22 +57,6 @@ public class Owner{
         this.socialSecurityNumber = socialSecurityNumber;
     }
 
-    public String getIdCardSeries() {
-        return idCardSeries;
-    }
-
-    public void setIdCardSeries(String idCardSeries) {
-        this.idCardSeries = idCardSeries;
-    }
-
-    public String getIdCardNumber() {
-        return idCardNumber;
-    }
-
-    public void setIdCardNumber(String idCardNumber) {
-        this.idCardNumber = idCardNumber;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -112,12 +92,10 @@ public class Owner{
     public Owner() {
     }
 
-    public Owner(String firstName, String lastName, String socialSecurityNumber, String idCardSeries, String idCardNumber, String address, String phoneNumber, String email) {
+    public Owner(String firstName, String lastName, String socialSecurityNumber, String address, String phoneNumber, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.socialSecurityNumber = socialSecurityNumber;
-        this.idCardSeries = idCardSeries;
-        this.idCardNumber = idCardNumber;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.email = email;

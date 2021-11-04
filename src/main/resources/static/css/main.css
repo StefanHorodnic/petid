@@ -1,0 +1,23 @@
+	body {
+		background: #eeeeee;
+		font-family: 'Poppins';
+	}
+
+    .btn-primary{
+        background-color: #0374ba;
+    }
+
+	/* Navigation top bar style */
+
+    .navbar{
+        font-size: 16px;
+        font-weight: 300;
+        min-height: 70px;
+        background: #fff;
+    }
+
+	.navbar-nav li a{
+	    cursor: pointer;
+	    line-height: 35px;
+	}
+

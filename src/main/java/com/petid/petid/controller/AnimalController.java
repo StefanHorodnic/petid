@@ -25,10 +25,15 @@ public class AnimalController {
         return "redirect:/index";
     }
 
-    @GetMapping(value={"/index"})
+    /*@GetMapping(value={"/index"})
     public String addAnimalForm(Animal animal, Model model) {
         model.addAttribute("allSpecies", speciesService.findAll());
         model.addAttribute("animals", animalService.findAllAnimals());
         return "/index";
+    }*/
+
+    @RequestMapping("/animals")
+    public String index(Model model) {
+        return "animals/animals";
     }
 }
