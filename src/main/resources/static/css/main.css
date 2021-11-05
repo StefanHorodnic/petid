@@ -16,6 +16,10 @@
         padding-top: 30px;
     }
 
+    .container .row{
+        margin-bottom: 20px;
+    }
+
     form .btn-primary{
         margin-top: 30px;
         float: right;
@@ -30,12 +34,19 @@
     }
 
 	/* Navigation top bar style */
-
     .navbar{
         font-size: 16px;
         font-weight: 300;
         min-height: 70px;
         background: #fff;
+    }
+
+    .navbar-collapse{
+        border-top: 0px;
+    }
+
+    .navbar-toggle{
+        margin-top: 15px;
     }
 
 	.navbar-nav li a{
