@@ -21,24 +21,19 @@ public class AnimalController {
 
     @PostMapping("/addAnimal")
     public String addAnimal(@Valid Animal animal) {
-        animalService.addAnimal(animal);
+        //animalService.addAnimal(animal);
         return "redirect:/animals";
     }
 
-    @GetMapping("/add-animal/animal-information")
-    public String ownerInformation(Model model) {
-        return "animals/add-animal/owner-information";
+    @GetMapping("/animals/add-animal/animal-information")
+    public String animalInformation(Animal animal, Model model) {
+        model.addAttribute("allSpecies", speciesService.findAll());
+        return "animals/add-animal/animal-information";
     }
 
-    /*@GetMapping(value={"/index"})
-    public String addAnimalForm(Animal animal, Model model) {
-        model.addAttribute("allSpecies", speciesService.findAll());
-        model.addAttribute("animals", animalService.findAllAnimals());
-        return "/index";
-    }*/
-
     @RequestMapping("/animals")
-    public String index(Model model) {
+    public String index(Animal animal, Model model) {
+        model.addAttribute("animals", animalService.findAllAnimals());
         return "animals/animals";
     }
 }

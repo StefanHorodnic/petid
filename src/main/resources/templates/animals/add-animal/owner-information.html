@@ -13,21 +13,37 @@
             <h3>Pasul 1 : Informații despre proprietar</h3>
         </div>
         <div class="row">
-            <form id="ownerInformationForm" th:action="@{/add-animal/owner-information}" th:object="${owner}" method="post">
-                <label for="socialSecurityNumber">C.N.P.</label>
-                <input type="text" class="form-control" th:field="*{socialSecurityNumber}" id="socialSecurityNumber" onchange="ownerBySocialSecurityNumber()">
-                <label for="lastName">Nume</label>
-                <input type="text" class="form-control" th:field="*{lastName}" id="lastName">
-                <label for="firstName">Prenume</label>
-                <input type="text" class="form-control" th:field="*{firstName}" id="firstName">
-                <label for="address">Adresă</label>
-                <input type="text" class="form-control" th:field="*{address}" id="address">
-                <label for="phoneNumber">Telefon</label>
-                <input type="text" class="form-control" th:field="*{phoneNumber}" id="phoneNumber">
-                <label for="email">Email</label>
-                <input type="text" class="form-control" th:field="*{email}" id="email">
-                <button type="submit" class="btn btn-primary">Continuă</button>
-            </form>
+            <div class="col-md-4 no-float"></div>
+            <div class="col-md-4">
+                <form id="ownerInformationForm" th:action="@{/add-animal/owner-information}" th:object="${owner}" method="post">
+                    <div class="form-group">
+                        <label for="socialSecurityNumber">C.N.P.</label>
+                        <input type="text" class="form-control" th:field="*{socialSecurityNumber}" id="socialSecurityNumber" onchange="ownerBySocialSecurityNumber()">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Nume</label>
+                        <input type="text" class="form-control" th:field="*{lastName}" id="lastName">
+                    </div>
+                    <div class="form-group">
+                        <label for="firstName">Prenume</label>
+                        <input type="text" class="form-control" th:field="*{firstName}" id="firstName">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Adresă</label>
+                        <input type="text" class="form-control" th:field="*{address}" id="address">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Telefon</label>
+                        <input type="text" class="form-control" th:field="*{phoneNumber}" id="phoneNumber">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" th:field="*{email}" id="email">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Continuă</button>
+                </form>
+            </div>
+            <div class="col-md-4 no-float"></div>
         </div>
     </div>
 </body>
