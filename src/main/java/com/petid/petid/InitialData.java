@@ -41,36 +41,6 @@ public class InitialData {
         breedRepository.save(new Breed(feline, "Europeană"));
         breedRepository.save(new Breed(feline, "Persană"));
 
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,3,16), Sex.Mascul, canine, ciobanescGerman,true, "alb", "", "6420934125678"));
-
 
         userService.save(new User("123", "stefan", "Ștefan Horodnic"));
         userService.save(new User("456","andrei", "Andrei Porgras"));

@@ -42,6 +42,7 @@ public class Animal{
     private LocalDateTime createdDateTime;
     @ManyToOne
     private Owner owner;
+
     private int createdByMedicId;
     @Transient
     private List<AnimalRecord> records;
@@ -180,13 +181,21 @@ public class Animal{
 
     }
 
-    public Animal(String name, LocalDate dateOfBirth, Sex sex, Species species, Breed breed, boolean hormonalState, String color, String distinctiveMarks, String microchip) {
+    public Animal(String name,
+                  LocalDate dateOfBirth,
+                  Sex sex,
+                  Species species,
+                  Breed breed,
+                  boolean neutered,
+                  String color,
+                  String distinctiveMarks,
+                  String microchip) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
         this.species = species;
         this.breed = breed;
-        this.neutered = hormonalState;
+        this.neutered = neutered;
         this.color = color;
         this.distinctiveMarks = distinctiveMarks;
         this.microchip = microchip;

@@ -1,14 +1,18 @@
 package com.petid.petid.controller;
 
-import com.petid.petid.model.Animal;
+import com.petid.petid.model.*;
 import com.petid.petid.service.AnimalService;
+import com.petid.petid.service.OwnerService;
 import com.petid.petid.service.SpeciesService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Controller
 public class AnimalController {
@@ -17,17 +21,30 @@ public class AnimalController {
     private AnimalService animalService;
     @Autowired
     private SpeciesService speciesService;
+    @Autowired
+    private OwnerService ownerService;
 
-
-    @PostMapping("/addAnimal")
-    public String addAnimal(@Valid Animal animal) {
-        //animalService.addAnimal(animal);
+    @PostMapping("/add-animal/animal-information")
+    public String addAnimal(
+            @Param("name") String name,
+            @Param("microchip") String microchip,
+            @Param("species") Species species,
+            @Param("breed") Breed breed,
+            @Param("dateOfBirth") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateOfBirth,
+            @Param("sex") Sex sex,
+            @Param("neutered") boolean neutered,
+            @Param("color") String color,
+            @Param("distinctiveMarks") String distinctiveMarks,
+            Model model) {
+        Owner owner = (Owner)model.getAttribute("owner");
+        Animal animal = new Animal(name, dateOfBirth, sex, species, breed, neutered, color, distinctiveMarks,microchip);
+        animal.setOwner(owner);
+        animalService.addAnimal(animal);
         return "redirect:/animals";
     }
 
-    @GetMapping("/animals/add-animal/animal-information")
+    @GetMapping("/add-animal/animal-information")
     public String animalInformation(Animal animal, Model model) {
-        model.addAttribute("allSpecies", speciesService.findAll());
         return "animals/add-animal/animal-information";
     }
 

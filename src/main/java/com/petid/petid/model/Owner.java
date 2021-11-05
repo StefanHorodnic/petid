@@ -2,6 +2,7 @@ package com.petid.petid.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,11 +20,13 @@ public class Owner{
     @NotNull
     private String address;
     @NotNull
-    private String phoneNumber;
+    private String phone;
     @NotNull
     private String email;
     @OneToMany(mappedBy = "owner")
     private List<Animal> animals;
+    @Transient
+    private String fullName;
 
     public UUID getId() {
         return id;
@@ -65,12 +68,12 @@ public class Owner{
         this.address = address;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getEmail() {
@@ -82,22 +85,28 @@ public class Owner{
     }
 
     public List<Animal> getAnimals() {
-        return animals;
+        List<Animal> bufferList = new ArrayList<>();
+        bufferList.addAll(animals);
+        return bufferList;
     }
 
     public void setAnimals(List<Animal> animals) {
         this.animals = animals;
     }
 
+    public String getFullName() {
+        return lastName + " " + firstName;
+    }
+
     public Owner() {
     }
 
-    public Owner(String firstName, String lastName, String socialSecurityNumber, String address, String phoneNumber, String email) {
+    public Owner(String socialSecurityNumber,String firstName, String lastName, String address, String phone, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.socialSecurityNumber = socialSecurityNumber;
         this.address = address;
-        this.phoneNumber = phoneNumber;
+        this.phone = phone;
         this.email = email;
     }
 
