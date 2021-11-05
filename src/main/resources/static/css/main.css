@@ -10,8 +10,9 @@
     .container {
         background-color: #fff;
         width: auto;
-        margin-right: 20px;
-        margin-left: 20px;
+        margin-right: 40px;
+        margin-left: 40px;
+        margin-top: 20px;
         padding-bottom: 30px;
         padding-top: 30px;
     }
@@ -39,6 +40,7 @@
         font-weight: 300;
         min-height: 70px;
         background: #fff;
+        margin-bottom: 40px;
     }
 
     .navbar-collapse{
@@ -53,4 +55,5 @@
 	    cursor: pointer;
 	    line-height: 35px;
 	}
+
 

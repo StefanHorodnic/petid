@@ -1,5 +1,9 @@
 $(document).ready( function () {
     $('#animalsTable').DataTable( {
+        "lengthChange": false,
+        "searching": false,
+        "pageLength": 20,
+        "pagingType": "numbers",
         language: {
                       "processing": "Procesează...",
                       "lengthMenu": "Afișează _MENU_ înregistrări pe pagină",
