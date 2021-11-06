@@ -3,6 +3,7 @@ package com.petid.petid;
 import com.petid.petid.model.*;
 import com.petid.petid.repository.AnimalRepository;
 import com.petid.petid.repository.BreedRepository;
+import com.petid.petid.repository.OwnerRepository;
 import com.petid.petid.repository.SpeciesRepository;
 import com.petid.petid.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class InitialData {
     private UserService userService;
     @Autowired
     private AnimalRepository animalRepository;
+    @Autowired
+    private OwnerRepository ownerRepository;
 
     @EventListener
     public void appReady(ApplicationReadyEvent event) {
@@ -41,6 +44,9 @@ public class InitialData {
         breedRepository.save(new Breed(feline, "Europeană"));
         breedRepository.save(new Breed(feline, "Persană"));
 
+        Owner owner = new Owner("1900415330316", "Stefan", "Horodnic", "Mihai Romanul nr 13", "0743510638", "stefanhorodnic@yahoo.com");
+
+        ownerRepository.save(owner);
 
         userService.save(new User("123", "stefan", "Ștefan Horodnic"));
         userService.save(new User("456","andrei", "Andrei Porgras"));

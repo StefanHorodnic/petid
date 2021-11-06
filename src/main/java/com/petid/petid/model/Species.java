@@ -2,9 +2,7 @@ package com.petid.petid.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 public class Species {
@@ -16,9 +14,9 @@ public class Species {
     @NotNull
     private String name;
     @OneToMany(mappedBy = "species")
-    private List<Breed> breeds;
+    private Set<Breed> breeds;
     @OneToMany(mappedBy = "species")
-    private List<Animal> animals;
+    private Set<Animal> animals;
 
     public UUID getId() {
         return id;
@@ -26,13 +24,13 @@ public class Species {
     public String getName() {
         return name;
     }
-    public List<Breed> getBreeds(){
-        List<Breed> buffer = new ArrayList<>();
+    public Set<Breed> getBreeds(){
+        Set<Breed> buffer = new HashSet<>();
         buffer.addAll(breeds);
         return buffer;
     }
-    public List<Animal> getAnimals(){
-        List<Animal> buffer = new ArrayList<>();
+    public Set<Animal> getAnimals(){
+        Set<Animal> buffer = new HashSet<>();
         buffer.addAll(animals);
         return buffer;
     }

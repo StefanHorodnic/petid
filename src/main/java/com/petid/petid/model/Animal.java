@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -25,9 +26,9 @@ public class Animal{
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     private Sex sex;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Species species;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Breed breed;
     @NotNull
     private boolean neutered;
@@ -40,12 +41,12 @@ public class Animal{
     @CreationTimestamp
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDateTime;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Owner owner;
 
     private int createdByMedicId;
     @Transient
-    private List<AnimalRecord> records;
+    private Set<AnimalRecord> records;
     @Transient
     private String age;
 
@@ -189,7 +190,8 @@ public class Animal{
                   boolean neutered,
                   String color,
                   String distinctiveMarks,
-                  String microchip) {
+                  String microchip,
+                  Owner owner) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
@@ -199,6 +201,7 @@ public class Animal{
         this.color = color;
         this.distinctiveMarks = distinctiveMarks;
         this.microchip = microchip;
+        this.owner = owner;
     }
 
 

@@ -17,7 +17,7 @@ public class AnimalService {
 
 
     //Public methods
-    public Animal addAnimal(Animal animal){
+    public Animal save(Animal animal){
         return animalRepository.save(animal);
     }
 

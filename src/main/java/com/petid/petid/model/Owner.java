@@ -2,12 +2,11 @@ package com.petid.petid.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 public class Owner{
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -24,9 +23,7 @@ public class Owner{
     @NotNull
     private String email;
     @OneToMany(mappedBy = "owner")
-    private List<Animal> animals;
-    @Transient
-    private String fullName;
+    private Set<Animal> animals = new HashSet<>();
 
     public UUID getId() {
         return id;
@@ -84,18 +81,14 @@ public class Owner{
         this.email = email;
     }
 
-    public List<Animal> getAnimals() {
-        List<Animal> bufferList = new ArrayList<>();
+    public Set<Animal> getAnimals() {
+        Set<Animal> bufferList = new HashSet<>();
         bufferList.addAll(animals);
         return bufferList;
     }
 
-    public void setAnimals(List<Animal> animals) {
-        this.animals = animals;
-    }
-
-    public String getFullName() {
-        return lastName + " " + firstName;
+    public void addAnimal(Animal animal) {
+        this.animals.add(animal);
     }
 
     public Owner() {
@@ -110,4 +103,16 @@ public class Owner{
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        return "Owner{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", socialSecurityNumber='" + socialSecurityNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email +
+                '}';
+    }
 }
