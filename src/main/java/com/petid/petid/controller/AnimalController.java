@@ -75,6 +75,7 @@ public class AnimalController {
 
     @RequestMapping("/animals")
     public String index(Animal animal, Model model) {
+
         model.addAttribute("animals", animalService.findAllAnimals());
         return "animals/animals";
     }

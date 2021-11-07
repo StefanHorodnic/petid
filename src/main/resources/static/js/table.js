@@ -1,7 +1,7 @@
 $(document).ready( function () {
     $('#animalsTable').DataTable( {
-        "lengthChange": false,
-        "searching": false,
+        "dom": 'rtip',
+        "searching": true,
         "pageLength": 20,
         "pagingType": "numbers",
         language: {
@@ -73,3 +73,9 @@ $(document).ready( function () {
                   }
     });
 } );
+
+function searchTable(){
+    var table = $('#animalsTable').DataTable();
+    var searchText = $('#searchAnimals').val();
+    table.search(searchText).draw();
+}

@@ -19,10 +19,10 @@
                     <input type="hidden"
                            th:name="${_csrf.parameterName}"
                            th:value="${_csrf.token}" />
-                    <input type="hidden" id="id" name="id" value=""/>
+                    <input type="hidden" id="id" th:value="${owner?.id}">
                     <div class="form-group">
                         <label for="socialSecurityNumber">C.N.P.</label>
-                        <input type="text" class="form-control" name="socialSecurityNumber" id="socialSecurityNumber" onchange="ownerBySocialSecurityNumber()">
+                        <input type="text" class="form-control" name="socialSecurityNumber" id="socialSecurityNumber" th:onkeyup="ownerBySocialSecurityNumber()">
                     </div>
                     <div class="form-group">
                         <label for="lastName">Nume</label>

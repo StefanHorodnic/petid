@@ -44,13 +44,17 @@ public class InitialData {
         breedRepository.save(new Breed(feline, "Europeană"));
         breedRepository.save(new Breed(feline, "Persană"));
 
-        Owner owner = new Owner("1900415330316", "Stefan", "Horodnic", "Mihai Romanul nr 13", "0743510638", "stefanhorodnic@yahoo.com");
+        Owner owner = new Owner("1234", "Stefan", "Horodnic", "Mihai Romanul nr 13", "0743510638", "stefanhorodnic@yahoo.com");
 
         ownerRepository.save(owner);
 
-        Animal animal = new Animal("Țițicu", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner);
+        animalRepository.save(new Animal("Țițicu", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner));
+        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner));
+        animalRepository.save(new Animal("Lacusta", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner));
+        animalRepository.save(new Animal("Gigel", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner));
 
-        animalRepository.save(animal);
+
+
 
         userService.save(new User("123", "stefan", "Ștefan Horodnic"));
         userService.save(new User("456","andrei", "Andrei Porgras"));

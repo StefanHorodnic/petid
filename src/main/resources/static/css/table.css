@@ -1,16 +1,18 @@
-  .nav div{
-        height: 4px;
-        background-color: blue;
-        margin: 5px 0;
+
+    .threeBars {
+        width: 30px;
+        display: block;
+        margin: auto;
+    }
+
+    .threeBars div{
+        height: 3px;
+        background-color: #0374ba;
+        margin: 3px 0;
         border-radius: 25px;
         transition: 0.3s;
     }
 
-    .nav{
-        width: 30px;
-        display: block;
-        margin: 1em 0 0 4em;
-    }
     .one {
         width: 30px;
     }
@@ -20,5 +22,5 @@
     .three {
         width: 25px;
     }
-    .nav:hover div {
+    .threeBars:hover div {
         width: 30px;

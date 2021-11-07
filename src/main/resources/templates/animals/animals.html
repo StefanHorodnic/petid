@@ -2,9 +2,12 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
   <head>
     <div th:replace="fragments/header :: header"></div>
+
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" th:src="@{/js/table.js}"></script>
+
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
     <title>Animale</title>
   </head>
   <body>
@@ -17,7 +20,7 @@
         <div class="col-md-1 no-float">
         </div>
         <div class="col-md-4">
-          <input id="searchAnimals" class="form-control" type="text" placeholder="Caută.." style="margin-top: 20px;">
+          <input id="searchAnimals" class="form-control" type="text" placeholder="Caută.." style="margin-top: 20px;" th:onkeyup="searchTable()">
         </div>
         <div class="col-md-4 no-float"></div>
         <div class="col-md-2">
@@ -52,7 +55,7 @@
                 <td class="text-center" th:text="${animal.microchip}"></td>
                 <td class="text-center" th:text="${animal.owner.lastName + ' ' + animal.owner.firstName}"></td>
                 <td class="text-center">
-                  <a href="#" class="nav">
+                  <a href="#" class="threeBars">
                     <div class="one"></div>
                     <div class="two"></div>
                     <div class="three"></div>

@@ -10,6 +10,7 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
@@ -31,9 +32,17 @@ public class OwnerController {
         return owner.orElse(new Owner());
     }
 
+    @GetMapping("/bufferedOwner")
+    @ResponseBody
+    public Owner getBufferedOwner(HttpServletRequest request){
+
+        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
+
+        return OwnerService.getOwnersBuffer().get(csrfToken);
+    }
+
     @PostMapping("/add-animal/owner-information")
     public String selectOwner(
-            @RequestParam(value = "id", defaultValue = "cad683be-7d1a-4064-8179-035bd234e4e4") UUID id,
             @Param("socialSecurityNumber") String socialSecurityNumber,
             @Param("firstName") String firstName,
             @Param("lastName") String lastName,
@@ -44,13 +53,15 @@ public class OwnerController {
 
         CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
 
-        OwnerService.getOwnersBuffer().put(csrfToken, ownerService.findById(id).orElse(new Owner(socialSecurityNumber, firstName, lastName, address, phone, email)));
+        Owner owner = ownerService.findBySocialSecurityNumber(socialSecurityNumber).orElse(new Owner(socialSecurityNumber, firstName, lastName, address, phone, email));
+
+        OwnerService.getOwnersBuffer().put(csrfToken, owner);
 
         return "redirect:/add-animal/animal-information";
     }
 
     @GetMapping("/add-animal/owner-information")
-    public String ownerInformation(Owner owner, Model model, HttpServletRequest request) {
+    public ModelAndView ownerInformation(Owner owner, Model model, HttpServletRequest request) {
 
         CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
 
@@ -58,7 +69,7 @@ public class OwnerController {
 
         model.addAttribute("owner", owner);
 
-        return "animals/add-animal/owner-information";
+        return new ModelAndView("animals/add-animal/owner-information");
     }
 
 }
