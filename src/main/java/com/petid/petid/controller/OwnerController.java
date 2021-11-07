@@ -2,15 +2,18 @@ package com.petid.petid.controller;
 
 import com.petid.petid.model.Owner;
 import com.petid.petid.service.OwnerService;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.web.csrf.CsrfToken;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
+import java.util.Random;
 import java.util.UUID;
 
 @Controller
@@ -29,34 +32,32 @@ public class OwnerController {
     }
 
     @PostMapping("/add-animal/owner-information")
-    public RedirectView selectOwner(
-            @Param("id") String id,
+    public String selectOwner(
+            @RequestParam(value = "id", defaultValue = "cad683be-7d1a-4064-8179-035bd234e4e4") UUID id,
             @Param("socialSecurityNumber") String socialSecurityNumber,
             @Param("firstName") String firstName,
             @Param("lastName") String lastName,
             @Param("address") String address,
             @Param("phone") String phone,
             @Param("email") String email,
-            RedirectAttributes attributes){
+            Model model, HttpServletRequest request){
 
-        Owner owner = new Owner();
+        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
 
-        try{
-            UUID uUID = UUID.fromString(id);
-            owner = ownerService.findById(uUID).orElseThrow();
-        }
-        catch (Exception e){
-            owner = new Owner(socialSecurityNumber, firstName, lastName, address, phone, email);
-        }
-        finally {
-            attributes.addFlashAttribute("owner", owner);
+        OwnerService.getOwnersBuffer().put(csrfToken, ownerService.findById(id).orElse(new Owner(socialSecurityNumber, firstName, lastName, address, phone, email)));
 
-            return new RedirectView("/add-animal/animal-information");
-        }
+        return "redirect:/add-animal/animal-information";
     }
 
     @GetMapping("/add-animal/owner-information")
-    public String ownerInformation(Owner owner, Model model) {
+    public String ownerInformation(Owner owner, Model model, HttpServletRequest request) {
+
+        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
+
+        owner = OwnerService.getOwnersBuffer().get(csrfToken);
+
+        model.addAttribute("owner", owner);
+
         return "animals/add-animal/owner-information";
     }
 

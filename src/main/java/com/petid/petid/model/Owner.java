@@ -1,5 +1,7 @@
 package com.petid.petid.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -23,6 +25,7 @@ public class Owner{
     @NotNull
     private String email;
     @OneToMany(mappedBy = "owner")
+    @JsonIgnore
     private Set<Animal> animals = new HashSet<>();
 
     public UUID getId() {

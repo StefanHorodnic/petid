@@ -1,5 +1,7 @@
 package com.petid.petid.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -14,8 +16,10 @@ public class Species {
     @NotNull
     private String name;
     @OneToMany(mappedBy = "species")
+    @JsonIgnore
     private Set<Breed> breeds;
     @OneToMany(mappedBy = "species")
+    @JsonIgnore
     private Set<Animal> animals;
 
     public UUID getId() {

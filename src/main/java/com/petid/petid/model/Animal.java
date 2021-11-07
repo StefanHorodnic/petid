@@ -1,5 +1,8 @@
 package com.petid.petid.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -8,11 +11,13 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class Animal{
 
     @Id
@@ -26,9 +31,11 @@ public class Animal{
     @NotNull
     @Enumerated(EnumType.ORDINAL)
     private Sex sex;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="SPECIES_ID", nullable=false)
     private Species species;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="BREED_ID", nullable=false)
     private Breed breed;
     @NotNull
     private boolean neutered;
@@ -41,121 +48,12 @@ public class Animal{
     @CreationTimestamp
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime createdDateTime;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Owner owner;
 
     private int createdByMedicId;
     @Transient
     private Set<AnimalRecord> records;
-    @Transient
-    private String age;
-
-
-    //Getters and setters
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Sex getSex() {
-        return sex;
-    }
-
-    public void setSex(Sex sex) {
-        this.sex = sex;
-    }
-
-    public Species getSpecies() {
-        return species;
-    }
-
-    public void setSpecies(Species species) {
-        this.species = species;
-    }
-
-    public Breed getBreed() {
-        return breed;
-    }
-
-    public void setBreed(Breed breed) {
-        this.breed = breed;
-    }
-
-    public boolean isNeutered() {
-        return neutered;
-    }
-
-    public void setNeutered(boolean neutered) {
-        this.neutered = neutered;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getDistinctiveMarks() {
-        return distinctiveMarks;
-    }
-
-    public void setDistinctiveMarks(String distinctiveMarks) {
-        this.distinctiveMarks = distinctiveMarks;
-    }
-
-    public String getMicrochip() {
-        return microchip;
-    }
-
-    public void setMicrochip(String microchip) {
-        this.microchip = microchip;
-    }
-
-    public LocalDateTime getCreatedDateTime() {
-        return createdDateTime;
-    }
-
-    public void setCreatedDateTime(LocalDateTime createdDateTime) {
-        this.createdDateTime = createdDateTime;
-    }
-
-    public int getCreatedByMedicId() {
-        return createdByMedicId;
-    }
-
-    public void setCreatedByMedicId(int createdByMedicId) {
-        this.createdByMedicId = createdByMedicId;
-    }
-
-    public Owner getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Owner owner) {
-        this.owner = owner;
-    }
 
     public String getAge() {
 
@@ -174,12 +72,6 @@ public class Animal{
         else{
             return period.getYears() + " ani";
         }
-    }
-
-    //Constructors
-
-    public Animal() {
-
     }
 
     public Animal(String name,

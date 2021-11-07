@@ -48,6 +48,10 @@ public class InitialData {
 
         ownerRepository.save(owner);
 
+        Animal animal = new Animal("Țițicu", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner);
+
+        animalRepository.save(animal);
+
         userService.save(new User("123", "stefan", "Ștefan Horodnic"));
         userService.save(new User("456","andrei", "Andrei Porgras"));
     }

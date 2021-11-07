@@ -33,7 +33,7 @@
                                     th:text="${species.name}"></option>
                         </select>
                         <label for="breedSelect">Rasa</label>
-                        <select id="breedSelect" class="form-control" name="breed"></select>
+                        <select id="breedSelect" class="form-control" th:name="breed"></select>
                         <label for="dateOfBirth">Data nașterii</label>
                         <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth" format="yyyy-MM-dd">
                         <label for="sexSelect">Sex</label>

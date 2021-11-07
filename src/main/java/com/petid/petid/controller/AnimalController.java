@@ -13,13 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Controller
-@SessionAttributes("owner")
 public class AnimalController {
 
     @Autowired
@@ -29,25 +26,22 @@ public class AnimalController {
     @Autowired
     private OwnerService ownerService;
 
-    @ModelAttribute("owner")
-    public Owner owner(){
-        return new Owner();
-    }
-
     @PostMapping("/add-animal/animal-information")
     public String addAnimal(
             @Param("name") String name,
             @Param("microchip") String microchip,
             @Param("species") Species species,
-            @Param("breed") Breed breed,
+            @RequestParam("breed") Breed breed,
             @Param("dateOfBirth") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateOfBirth,
             @Param("sex") Sex sex,
             @Param("neutered") boolean neutered,
             @Param("color") String color,
             @Param("distinctiveMarks") String distinctiveMarks,
-            Model model) {
+            Model model, HttpServletRequest request) {
 
-        Owner bufferedOwner = (Owner) model.getAttribute("owner");
+        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
+
+        Owner bufferedOwner = OwnerService.getOwnersBuffer().get(csrfToken);
 
         if(bufferedOwner.getId()==null){
             ownerService.save(bufferedOwner);
@@ -57,19 +51,21 @@ public class AnimalController {
 
         animalService.save(animal);
 
-
+        OwnerService.getOwnersBuffer().remove(csrfToken);
 
         return "redirect:/animals";
     }
 
     @GetMapping("/add-animal/animal-information")
-    public String animalInformation(Animal animal, Model model) {
+    public String animalInformation(Animal animal, Model model, HttpServletRequest request) {
 
-        Owner owner = (Owner) model.getAttribute("owner");
+        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
 
-        if(owner==null){
+        if(OwnerService.getOwnersBuffer().get(csrfToken)==null){
             return "redirect:/add-animal/owner-information";
         }
+
+        Owner owner = OwnerService.getOwnersBuffer().get(csrfToken);
 
         model.addAttribute("allSpecies", speciesService.findAll());
         model.addAttribute("ownerFullName", owner.getLastName()+" "+owner.getFirstName());
