@@ -28,6 +28,10 @@
         margin-bottom: 20px;
     }
 
+    .error {
+        color: red;
+    }
+
     form label{
         margin-top: 10px;
     }

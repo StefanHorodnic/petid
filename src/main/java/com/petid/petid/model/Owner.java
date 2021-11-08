@@ -3,7 +3,7 @@ package com.petid.petid.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.*;
 import java.util.*;
 
 @Entity
@@ -13,16 +13,22 @@ public class Owner{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @NotNull
+    @NotEmpty(message = "Adaugă prenumele")
     private String firstName;
     @NotNull
+    @NotEmpty(message = "Adaugă numele")
     private String lastName;
     @NotNull
+    @Size(min = 13, max = 13, message = "C.N.P.-ul trebuie să fie un număr de 13 cifre")
     private String socialSecurityNumber;
     @NotNull
     private String address;
     @NotNull
+    @NotEmpty(message = "Adaugă numărul de telefon")
     private String phone;
     @NotNull
+    @NotEmpty(message = "Adaugă email-ul")
+    @Email(message = "Trebuie să fie un mail valid")
     private String email;
     @OneToMany(mappedBy = "owner")
     @JsonIgnore

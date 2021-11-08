@@ -55,19 +55,17 @@
                 <td class="text-center" th:text="${animal.microchip}"></td>
                 <td class="text-center" th:text="${animal.owner.lastName + ' ' + animal.owner.firstName}"></td>
                 <td>
-                  <span style="overflow: visible;">
-                    <div class="dropdown position-static actions d-inline-block">
-                       <a href="#" class="threeBars" data-toggle="dropdown">
-                        <div class="one"></div>
-                        <div class="two"></div>
-                        <div class="three"></div>
-                       </a>
-                      <div class="dropdown-menu" x-placement="bottom-end" style="position: absolute">
-                        <li><a class="dropdown-item" href="#">Deschide fișa animalului</a></li>
-                        <li><a class="dropdown-item" href="#">Schimbă proprietarul</a></li>
-                      </div>
-                    </div>
-                  </span>
+                  <div class="dropdown">
+                    <a href="#" class="threeBars" data-toggle="dropdown">
+                      <div class="one"></div>
+                      <div class="two"></div>
+                      <div class="three"></div>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Deschide fișa</a></li>
+<!--                      <li><a class="dropdown-item" href="#">Schimbă proprietarul</a></li>-->
+                    </ul>
+                  </div>
                 </td>
               </tr>
               </tbody>

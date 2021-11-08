@@ -37,25 +37,32 @@ public class InitialData {
         speciesRepository.save(feline);
 
         Breed ciobanescGerman = new Breed(canine, "Ciobănesc german");
+        Breed europeana = new Breed(feline, "Europeană");
 
         breedRepository.save(ciobanescGerman);
         breedRepository.save(new Breed(canine, "Beagle"));
         breedRepository.save(new Breed(canine, "Poodle"));
-        breedRepository.save(new Breed(feline, "Europeană"));
+        breedRepository.save(europeana);
         breedRepository.save(new Breed(feline, "Persană"));
 
-        Owner owner = new Owner("1234", "Stefan", "Horodnic", "Mihai Romanul nr 13", "0743510638", "stefanhorodnic@yahoo.com");
+        Owner owner = new Owner("1234567891234", "Stefan", "Horodnic", "Cluj-Napoca", "0743510638", "stefanhorodnic@yahoo.com");
+        Owner owner2 = new Owner("1234567891235", "Andrei", "Porgras", "Iași", "0732564376", "andreiporgras@yahoo.com");
 
         ownerRepository.save(owner);
+        ownerRepository.save(owner2);
 
         User user = new User("123", "stefan", "Ștefan Horodnic");
 
         userService.save(user);
         userService.save(new User("456","andrei", "Andrei Porgras"));
 
-        animalRepository.save(new Animal("Țițicu", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner, user));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner,user));
-        animalRepository.save(new Animal("Lacusta", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner,user));
-        animalRepository.save(new Animal("Gigel", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner,user));
+        animalRepository.save(new Animal("Maya", LocalDate.of(2014,04,15), Sex.Femelă, canine,
+                ciobanescGerman, true, "", "", "", owner, user));
+        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,04,15), Sex.Mascul, canine,
+                ciobanescGerman, true, "", "", "", owner2,user));
+        animalRepository.save(new Animal("Luna", LocalDate.of(2014,04,15), Sex.Femelă, feline,
+                europeana, true, "", "", "", owner,user));
+        animalRepository.save(new Animal("Tom", LocalDate.of(2014,04,15), Sex.Mascul, feline,
+                europeana, true, "", "", "", owner2,user));
     }
 }

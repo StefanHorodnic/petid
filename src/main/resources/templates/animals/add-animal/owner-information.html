@@ -9,39 +9,45 @@
     <div th:replace="fragments/navigation :: navigation"></div>
     <div class="container">
         <div class="row">
-            <h3>Informații despre proprietar</h3>
+            <h3>Pasul 1: Informații despre proprietar</h3>
         </div>
         <div class="row">
             <div class="col-md-4 no-float"></div>
             <div class="col-md-4">
-                <form id="ownerInformationForm" method="post">
+                <form id="ownerInformationForm" method="post" th:action="@{/add-animal/owner-information}" th:object="${owner}">
                     <input type="hidden"
                            th:name="${_csrf.parameterName}"
                            th:value="${_csrf.token}" />
-                    <input type="hidden" id="id" th:value="${owner?.id}">
+                    <input type="hidden" id="id" th:value="${bufferedOwner?.id}">
                     <div class="form-group">
                         <label for="socialSecurityNumber">C.N.P.</label>
-                        <input type="text" class="form-control" name="socialSecurityNumber" id="socialSecurityNumber" th:onkeyup="ownerBySocialSecurityNumber()">
+                        <input type="text" class="form-control" name="socialSecurityNumber"
+                               id="socialSecurityNumber" th:onkeyup="ownerBySocialSecurityNumber()" th:field="*{socialSecurityNumber}">
+                        <p th:if="${#fields.hasErrors('socialSecurityNumber')}" th:errorclass="error" th:errors="*{socialSecurityNumber}" />
                     </div>
                     <div class="form-group">
                         <label for="lastName">Nume</label>
-                        <input type="text" class="form-control" name="lastName" id="lastName">
+                        <input type="text" class="form-control" name="lastName" id="lastName" th:field="*{lastName}">
+                        <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}" />
                     </div>
                     <div class="form-group">
                         <label for="firstName">Prenume</label>
-                        <input type="text" class="form-control" name="firstName" id="firstName">
+                        <input type="text" class="form-control" name="firstName" id="firstName" th:field="*{firstName}">
+                        <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}" />
                     </div>
                     <div class="form-group">
                         <label for="address">Adresă</label>
-                        <input type="text" class="form-control" name="address" id="address">
+                        <input type="text" class="form-control" name="address" id="address" th:field="*{address}">
                     </div>
                     <div class="form-group">
                         <label for="phone">Telefon</label>
-                        <input type="text" class="form-control" name="phone" id="phone">
+                        <input type="text" class="form-control" name="phone" id="phone" th:field="*{phone}">
+                        <p th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{phone}" />
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="text" class="form-control" name="email" id="email">
+                        <input type="text" class="form-control" name="email" id="email" th:field="*{email}">
+                        <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}" />
                     </div>
                     <button type="submit" class="btn btn-primary">Continuă</button>
                 </form>

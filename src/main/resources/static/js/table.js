@@ -79,3 +79,4 @@ function searchTable(){
     var searchText = $('#searchAnimals').val();
     table.search(searchText).draw();
 }
+
