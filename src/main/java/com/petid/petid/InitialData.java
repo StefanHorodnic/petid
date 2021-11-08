@@ -48,15 +48,14 @@ public class InitialData {
 
         ownerRepository.save(owner);
 
-        animalRepository.save(new Animal("Țițicu", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner));
-        animalRepository.save(new Animal("Lacusta", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner));
-        animalRepository.save(new Animal("Gigel", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner));
+        User user = new User("123", "stefan", "Ștefan Horodnic");
 
-
-
-
-        userService.save(new User("123", "stefan", "Ștefan Horodnic"));
+        userService.save(user);
         userService.save(new User("456","andrei", "Andrei Porgras"));
+
+        animalRepository.save(new Animal("Țițicu", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner, user));
+        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner,user));
+        animalRepository.save(new Animal("Lacusta", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner,user));
+        animalRepository.save(new Animal("Gigel", LocalDate.of(2014,04,15), Sex.Mascul, canine, ciobanescGerman, true, "", "", "", owner,user));
     }
 }

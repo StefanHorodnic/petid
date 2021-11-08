@@ -4,9 +4,12 @@ import com.petid.petid.model.*;
 import com.petid.petid.service.AnimalService;
 import com.petid.petid.service.OwnerService;
 import com.petid.petid.service.SpeciesService;
+import com.petid.petid.userdetails.UserDetailsCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
@@ -49,7 +52,11 @@ public class AnimalController {
             ownerService.save(bufferedOwner);
         }
 
-        Animal animal = new Animal(name, LocalDate.parse(dateOfBirth, formatter), sex, species, breed, neutered, color, distinctiveMarks, microchip, bufferedOwner);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        User user = ((UserDetailsCustom)auth.getPrincipal()).getUser();
+
+        Animal animal = new Animal(name, LocalDate.parse(dateOfBirth, formatter), sex, species, breed, neutered, color, distinctiveMarks, microchip, bufferedOwner, user);
 
         animalService.save(animal);
 

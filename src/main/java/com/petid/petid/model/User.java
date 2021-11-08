@@ -1,13 +1,23 @@
 package com.petid.petid.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class User{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    @NotNull
     private String stampNumber;
     @NotNull
     private String password;
@@ -16,32 +26,6 @@ public class User{
     @NotNull
     private LocalDateTime createdDateTime;
 
-    public String getStampNumber() {
-        return stampNumber;
-    }
-
-    public void setStampNumber(String stampNumber) {
-        this.stampNumber = stampNumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public User() {
-    }
 
     public User(String stampNumber, String password, String name) {
         this.stampNumber = stampNumber;

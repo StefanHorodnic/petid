@@ -50,8 +50,8 @@ public class Animal{
     private LocalDateTime createdDateTime;
     @ManyToOne
     private Owner owner;
-
-    private int createdByMedicId;
+    @ManyToOne
+    private User user;
     @Transient
     private Set<AnimalRecord> records;
 
@@ -83,7 +83,8 @@ public class Animal{
                   String color,
                   String distinctiveMarks,
                   String microchip,
-                  Owner owner) {
+                  Owner owner,
+                  User user) {
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.sex = sex;
@@ -94,6 +95,7 @@ public class Animal{
         this.distinctiveMarks = distinctiveMarks;
         this.microchip = microchip;
         this.owner = owner;
+        this.user = user;
     }
 
 
@@ -113,7 +115,6 @@ public class Animal{
                 ", distinctiveMarks='" + distinctiveMarks + '\'' +
                 ", microchip='" + microchip + '\'' +
                 ", createdDateTime=" + createdDateTime +
-                ", createdByMedicId=" + createdByMedicId +
                 ", records=" + records +
                 '}';
     }

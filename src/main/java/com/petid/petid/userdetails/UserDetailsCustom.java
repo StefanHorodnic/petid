@@ -23,7 +23,6 @@ public class UserDetailsCustom implements UserDetails {
     public String getPassword() {
         return user.getPassword();
     }
-
     @Override
     public String getUsername() {
         return user.getStampNumber();
@@ -31,6 +30,10 @@ public class UserDetailsCustom implements UserDetails {
 
     public String getName(){
         return this.user.getName();
+    }
+
+    public User getUser(){
+        return this.user;
     }
 
     @Override
