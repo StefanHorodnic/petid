@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @Controller
 public class AnimalController {
@@ -32,7 +33,7 @@ public class AnimalController {
             @Param("microchip") String microchip,
             @Param("species") Species species,
             @RequestParam("breed") Breed breed,
-            @Param("dateOfBirth") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dateOfBirth,
+            @Param("dateOfBirth")String dateOfBirth,
             @Param("sex") Sex sex,
             @Param("neutered") boolean neutered,
             @Param("color") String color,
@@ -40,6 +41,7 @@ public class AnimalController {
             Model model, HttpServletRequest request) {
 
         CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
         Owner bufferedOwner = OwnerService.getOwnersBuffer().get(csrfToken);
 
@@ -47,11 +49,9 @@ public class AnimalController {
             ownerService.save(bufferedOwner);
         }
 
-        Animal animal = new Animal(name, dateOfBirth, sex, species, breed, neutered, color, distinctiveMarks, microchip, bufferedOwner);
+        Animal animal = new Animal(name, LocalDate.parse(dateOfBirth, formatter), sex, species, breed, neutered, color, distinctiveMarks, microchip, bufferedOwner);
 
         animalService.save(animal);
-
-        OwnerService.getOwnersBuffer().remove(csrfToken);
 
         return "redirect:/animals";
     }
@@ -74,7 +74,11 @@ public class AnimalController {
     }
 
     @RequestMapping("/animals")
-    public String index(Animal animal, Model model) {
+    public String index(Animal animal, Model model, HttpServletRequest request) {
+
+        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
+
+        OwnerService.getOwnersBuffer().remove(csrfToken);
 
         model.addAttribute("animals", animalService.findAllAnimals());
         return "animals/animals";

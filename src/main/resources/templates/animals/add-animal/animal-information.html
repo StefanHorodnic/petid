@@ -2,7 +2,11 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
     <head>
         <div th:replace="fragments/header"></div>
-        <script type="text/javascript" th:src="@{/js/breed.js}"></script>
+        <script type="text/javascript" th:src="@{/js/animal.js}"></script>
+
+        <!--Date Time Picker-->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 
         <title>Adaugă animal</title>
     </head>
@@ -26,8 +30,7 @@
                         <label for="microchipText">Microcip</label>
                         <input type="text" class="form-control" name="microchip" id="microchipText">
                         <label for="speciesSelect">Specia</label>
-                        <select id="speciesSelect" class="form-control selectpicker" th:onchange="updateBreedSelect()" name="species">
-                            <option disabled value="">Nothing selected</option>
+                        <select id="speciesSelect" class="form-control" th:onchange="updateBreedSelect()" name="species">
                             <option th:each="species : ${allSpecies}"
                                     th:value="${species.id}"
                                     th:text="${species.name}"></option>
@@ -35,14 +38,14 @@
                         <label for="breedSelect">Rasa</label>
                         <select id="breedSelect" class="form-control" th:name="breed"></select>
                         <label for="dateOfBirth">Data nașterii</label>
-                        <input type="date" class="form-control" name="dateOfBirth" id="dateOfBirth" format="yyyy-MM-dd">
+                        <input class="form-control" name="dateOfBirth" id="dateOfBirth" type="text">
                         <label for="sexSelect">Sex</label>
                         <select id="sexSelect" class="form-control" name="sex" >
                             <option th:each="sex : ${T(com.petid.petid.model.Sex).values()}"
                                     th:value="${sex}"
                                     th:text="${sex}">
                         </select>
-                        <div class="form-check">
+                        <div class="form-check" style="margin-top:5px">
                             <input class="form-check-input" type="checkbox" name="neutered" id="neuteredCheckBox"/>
                             <label class="form-check-label" for="neuteredCheckBox">Sterilizat(ă)</label>
                         </div>

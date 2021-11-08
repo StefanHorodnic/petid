@@ -1,3 +1,11 @@
+$(document).ready(function(){
+    $('#dateOfBirth').datepicker({
+        format: 'dd.mm.yyyy'
+    });
+
+    updateBreedSelect();
+})
+
 function updateBreedSelect() {
 
     $("#breedSelect").empty();
@@ -11,5 +19,4 @@ function updateBreedSelect() {
             $("#breedSelect").append(option);
         });
     });
-
 };
