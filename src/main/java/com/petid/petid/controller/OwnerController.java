@@ -2,22 +2,14 @@ package com.petid.petid.controller;
 
 import com.petid.petid.model.Owner;
 import com.petid.petid.service.OwnerService;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Optional;
-import java.util.Random;
-import java.util.UUID;
 
 @Controller
 public class OwnerController {
@@ -34,40 +26,35 @@ public class OwnerController {
         return owner.orElse(new Owner());
     }
 
-    @GetMapping("/bufferedOwner")
-    @ResponseBody
-    public Owner getBufferedOwner(HttpServletRequest request){
-
-        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
-
-        return OwnerService.getOwnersBuffer().get(csrfToken);
-    }
 
     @PostMapping("/add-animal/owner-information")
-    public String selectOwner(@Valid Owner owner, BindingResult bindingResult, Model model, HttpServletRequest request){
+    public String selectOwner(@Valid Owner owner, BindingResult bindingResult, Model model){
 
-        if(bindingResult.hasErrors()){
-            return "animals/add-animal/owner-information";
+        System.out.println(owner);
+
+        Optional<Owner> existingOwner = ownerService.findById(owner.getId());
+
+        if(!existingOwner.isPresent()){
+            if(bindingResult.hasErrors()){
+                return "animals/add-animal/owner-information";
+            }
+            ownerService.save(owner);
         }
         else{
-            CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
-
-            OwnerService.getOwnersBuffer().put(csrfToken, owner);
-
-            return "redirect:/add-animal/animal-information";
+            owner = existingOwner.get();
         }
+
+        model.addAttribute("owner", owner);
+
+        return "redirect:/add-animal/animal-information";
     }
 
     @GetMapping("/add-animal/owner-information")
-    public ModelAndView ownerInformation(Owner owner, Model model, HttpServletRequest request) {
+    public String ownerInformation(Owner owner, Model model) {
 
-        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
+        model.addAttribute("owner", owner);
 
-        owner = OwnerService.getOwnersBuffer().get(csrfToken);
-
-        model.addAttribute("bufferedOwner", owner);
-
-        return new ModelAndView("animals/add-animal/owner-information");
+        return "animals/add-animal/owner-information";
     }
 
 }

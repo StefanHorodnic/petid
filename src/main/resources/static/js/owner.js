@@ -1,58 +1,35 @@
-$(document).ready(function(){
-    $.get("/bufferedOwner", function(data){
-        if(data.id == "" || data.id == null){
-            $("#lastName").prop("disabled", false);
-            $("#firstName").prop("disabled", false);
-            $("#address").prop("disabled", false);
-            $("#phone").prop("disabled", false);
-            $("#email").prop("disabled", false);
-        }
-        else{
-            $("#lastName").prop("disabled", true);
-            $("#firstName").prop("disabled", true);
-            $("#address").prop("disabled", true);
-            $("#phone").prop("disabled", true);
-            $("#email").prop("disabled", true);
-        }
-        $("#socialSecurityNumber").prop("value", data.socialSecurityNumber);
-        $("#lastName").prop("value", data.lastName);
-        $("#firstName").prop("value", data.firstName);
-        $("#address").prop("value", data.address);
-        $("#phone").prop("value", data.phone);
-        $("#email").prop("value", data.email);
-    });
-});
-
 function ownerBySocialSecurityNumber(){
 
     socialSecurityNumber = $("#socialSecurityNumber").val();
 
     $.get("/ownerBySocialSecurityNumber?socialSecurityNumber=" + socialSecurityNumber, function(data){
         if(data.id==null){
-            $("#lastName").prop("disabled", false);
-            $("#firstName").prop("disabled", false);
-            $("#address").prop("disabled", false);
-            $("#phone").prop("disabled", false);
-            $("#email").prop("disabled", false);
+            $("#lastName").prop("readonly", false);
+            $("#firstName").prop("readonly", false);
+            $("#address").prop("readonly", false);
+            $("#phone").prop("readonly", false);
+            $("#email").prop("readonly", false);
 
-            $("#lastName").prop("value", "");
-            $("#firstName").prop("value", "");
-            $("#address").prop("value", "");
-            $("#phone").prop("value", "");
-            $("#email").prop("value", "");
+            document.getElementById("id").value = "";
+            document.getElementById("lastName").value = "";
+            document.getElementById("firstName").value = "";
+            document.getElementById("address").value = "";
+            document.getElementById("phone").value = "";
+            document.getElementById("email").value = "";
         }
         else{
-            $("#lastName").prop("disabled", true);
-            $("#firstName").prop("disabled", true);
-            $("#address").prop("disabled", true);
-            $("#phone").prop("disabled", true);
-            $("#email").prop("disabled", true);
+            $("#lastName").prop("readonly", true);
+            $("#firstName").prop("readonly", true);
+            $("#address").prop("readonly", true);
+            $("#phone").prop("readonly", true);
+            $("#email").prop("readonly", true);
 
-            $("#lastName").prop("value", data.lastName);
-            $("#firstName").prop("value", data.firstName);
-            $("#address").prop("value", data.address);
-            $("#phone").prop("value", data.phone);
-            $("#email").prop("value", data.email);
+            document.getElementById("id").value = data.id;
+            document.getElementById("lastName").value = data.lastName;
+            document.getElementById("firstName").value = data.firstName;
+            document.getElementById("address").value = data.address;
+            document.getElementById("phone").value = data.phone;
+            document.getElementById("email").value = data.email;
         }
     });
 };

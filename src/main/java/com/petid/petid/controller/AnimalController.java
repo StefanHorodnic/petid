@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -43,7 +44,7 @@ public class AnimalController {
             @Param("distinctiveMarks") String distinctiveMarks,
             Model model, HttpServletRequest request) {
 
-        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
+       /* CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
         Owner bufferedOwner = OwnerService.getOwnersBuffer().get(csrfToken);
@@ -58,21 +59,17 @@ public class AnimalController {
 
         Animal animal = new Animal(name, LocalDate.parse(dateOfBirth, formatter), sex, species, breed, neutered, color, distinctiveMarks, microchip, bufferedOwner, user);
 
-        animalService.save(animal);
+        animalService.save(animal);*/
 
         return "redirect:/animals";
     }
 
     @GetMapping("/add-animal/animal-information")
-    public String animalInformation(Animal animal, Model model, HttpServletRequest request) {
+    public String animalInformation(Animal animal, Owner owner, Model model) {
 
-        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
-
-        if(OwnerService.getOwnersBuffer().get(csrfToken)==null){
+        if(owner==null){
             return "redirect:/add-animal/owner-information";
         }
-
-        Owner owner = OwnerService.getOwnersBuffer().get(csrfToken);
 
         model.addAttribute("allSpecies", speciesService.findAll());
         model.addAttribute("ownerFullName", owner.getLastName()+" "+owner.getFirstName());
@@ -81,11 +78,7 @@ public class AnimalController {
     }
 
     @RequestMapping("/animals")
-    public String index(Animal animal, Model model, HttpServletRequest request) {
-
-        CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
-
-        OwnerService.getOwnersBuffer().remove(csrfToken);
+    public String index(Animal animal, Model model) {
 
         model.addAttribute("animals", animalService.findAllAnimals());
         return "animals/animals";
