@@ -19,40 +19,62 @@
             <div class="row">
                 <div class="col-md-4 no-float"></div>
                 <div class="col-md-4">
-                    <form id="addAnimalForm" method="post">
-                        <input type="hidden"
-                               th:name="${_csrf.parameterName}"
-                               th:value="${_csrf.token}" />
-                        <label for="ownerFullName">Proprietar</label>
-                        <input type="text" class="form-control" name="ownerFullName" id="ownerFullName" th:value="${ownerFullName}" disabled>
-                        <label for="name">Nume</label>
-                        <input type="text" class="form-control" name="name" id="name">
-                        <label for="microchipText">Microcip</label>
-                        <input type="text" class="form-control" name="microchip" id="microchipText">
-                        <label for="speciesSelect">Specia</label>
-                        <select id="speciesSelect" class="form-control" th:onchange="updateBreedSelect()" name="species">
-                            <option th:each="species : ${allSpecies}"
-                                    th:value="${species.id}"
-                                    th:text="${species.name}"></option>
-                        </select>
-                        <label for="breedSelect">Rasa</label>
-                        <select id="breedSelect" class="form-control" th:name="breed"></select>
-                        <label for="dateOfBirth">Data nașterii</label>
-                        <input class="form-control" name="dateOfBirth" id="dateOfBirth" type="text">
-                        <label for="sexSelect">Sex</label>
-                        <select id="sexSelect" class="form-control" name="sex" >
-                            <option th:each="sex : ${T(com.petid.petid.model.Sex).values()}"
-                                    th:value="${sex}"
-                                    th:text="${sex}">
-                        </select>
-                        <div class="form-check" style="margin-top:5px">
-                            <input class="form-check-input" type="checkbox" name="neutered" id="neuteredCheckBox"/>
-                            <label class="form-check-label" for="neuteredCheckBox">Sterilizat(ă)</label>
+                    <form id="animalInformationForm" th:action="@{/add-animal/animal-information}" th:object="${animal}" method="post">
+                        <label th:for="${#ids.next('ownerFullName')}">Proprietar</label>
+                        <input type="text" class="form-control" th:value="${animal.owner.LastName}+' '+${animal.owner.FirstName}" disabled>
+                        <div class="form-group">
+                            <label th:for="${#ids.next('name')}">Nume</label>
+                            <input type="text" class="form-control" th:field="*{name}">
+                            <p th:if="${#fields.hasErrors('name')}" th:errorclass="error" th:errors="*{name}"></p>
                         </div>
-                        <label for="colorText">Culoare</label>
-                        <input type="text" class="form-control" name="color" id="colorText">
-                        <label for="distinctiveMarksText">Semne distinctive</label>
-                        <input type="text" class="form-control" name="distinctiveMarks" id="distinctiveMarksText">
+                        <div class="form-group">
+                            <label th:for="${#ids.next('microchip')}">Microcip</label>
+                            <input type="text" class="form-control" th:field="*{microchip}">
+                            <p th:if="${#fields.hasErrors('microchip')}" th:errorclass="error" th:errors="*{microchip}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="${#ids.next('species')}">Specia</label>
+                            <select class="form-control" th:onchange="updateBreedSelect()" th:field="*{species}">
+                                <option th:each="species : ${allSpecies}"
+                                        th:value="${species.id}"
+                                        th:text="${species.name}"></option>
+                            </select>
+                            <p th:if="${#fields.hasErrors('species')}" th:errorclass="error" th:errors="*{species}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="${#ids.next('breed')}">Rasa</label>
+                            <select class="form-control" th:field="*{breed}"></select>
+                            <p th:if="${#fields.hasErrors('breed')}" th:errorclass="error" th:errors="*{breed}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="${#ids.next('dateOfBirth')}">Data nașterii</label>
+                            <input type="text" class="form-control" th:field="*{dateOfBirth}">
+                            <p th:if="${#fields.hasErrors('dateOfBirth')}" th:errorclass="error" th:errors="*{dateOfBirth}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="${#ids.next('sex')}">Sex</label>
+                            <select class="form-control" th:field="*{sex}" >
+                                <option th:each="sex : ${T(com.petid.petid.model.Sex).values()}"
+                                        th:value="${sex}"
+                                        th:text="${sex}">
+                            </select>
+                            <p th:if="${#fields.hasErrors('sex')}" th:errorclass="error" th:errors="*{sex}"></p>
+                        </div>
+                        <div class="form-check" style="margin-top:5px">
+                            <input type="checkbox" class="form-check-input" th:field="*{neutered}"/>
+                            <label class="form-check-label" th:for="${#ids.next('neutered')}">Sterilizat(ă)</label>
+                            <p th:if="${#fields.hasErrors('neutered')}" th:errorclass="error" th:errors="*{neutered}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="${#ids.next('color')}">Culoare</label>
+                            <input type="text" class="form-control" th:field="*{color}">
+                            <p th:if="${#fields.hasErrors('color')}" th:errorclass="error" th:errors="*{color}"></p>
+                        </div>
+                        <div class="form-group">
+                            <label th:for="${#ids.next('distinctiveMarks')}">Semne distinctive</label>
+                            <input type="text" class="form-control" th:field="*{distinctiveMarks}">
+                            <p th:if="${#fields.hasErrors('distinctiveMarks')}" th:errorclass="error" th:errors="*{distinctiveMarks}"></p>
+                        </div>
                         <button type="submit" class="btn btn-primary">Salvează</button>
                     </form>
                 </div>

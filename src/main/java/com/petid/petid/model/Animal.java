@@ -1,12 +1,12 @@
 package com.petid.petid.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -24,9 +24,10 @@ public class Animal{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @NotNull
+    @NotEmpty
     private String name;
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dateOfBirth;
     @NotNull
     @Enumerated(EnumType.ORDINAL)
@@ -46,7 +47,7 @@ public class Animal{
     @NotNull
     private String microchip;
     @CreationTimestamp
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime createdDateTime;
     @ManyToOne
     private Owner owner;
@@ -98,9 +99,6 @@ public class Animal{
         this.user = user;
     }
 
-
-    //Public methods
-
     @Override
     public String toString() {
         return "Animal{" +
@@ -115,7 +113,8 @@ public class Animal{
                 ", distinctiveMarks='" + distinctiveMarks + '\'' +
                 ", microchip='" + microchip + '\'' +
                 ", createdDateTime=" + createdDateTime +
-                ", records=" + records +
+                ", owner=" + owner +
+                ", user=" + user +
                 '}';
     }
 }

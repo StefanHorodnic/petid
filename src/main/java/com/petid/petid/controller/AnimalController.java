@@ -2,85 +2,70 @@ package com.petid.petid.controller;
 
 import com.petid.petid.model.*;
 import com.petid.petid.service.AnimalService;
-import com.petid.petid.service.OwnerService;
 import com.petid.petid.service.SpeciesService;
 import com.petid.petid.userdetails.UserDetailsCustom;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.csrf.CsrfToken;
-import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.support.SessionStatus;
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Controller
+@SessionAttributes("animal")
 public class AnimalController {
 
     @Autowired
     private AnimalService animalService;
     @Autowired
     private SpeciesService speciesService;
-    @Autowired
-    private OwnerService ownerService;
 
     @PostMapping("/add-animal/animal-information")
-    public String addAnimal(
-            @Param("name") String name,
-            @Param("microchip") String microchip,
-            @Param("species") Species species,
-            @RequestParam("breed") Breed breed,
-            @Param("dateOfBirth")String dateOfBirth,
-            @Param("sex") Sex sex,
-            @Param("neutered") boolean neutered,
-            @Param("color") String color,
-            @Param("distinctiveMarks") String distinctiveMarks,
-            Model model, HttpServletRequest request) {
+    public String addAnimal(@Valid Animal animal, BindingResult bindingResult,
+                            Model model, @AuthenticationPrincipal UserDetailsCustom user, SessionStatus sessionStatus) {
 
-       /* CsrfToken csrfToken = new HttpSessionCsrfTokenRepository().loadToken(request);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        model.addAttribute("animal", animal);
 
-        Owner bufferedOwner = OwnerService.getOwnersBuffer().get(csrfToken);
-
-        if(bufferedOwner.getId()==null){
-            ownerService.save(bufferedOwner);
+        if(bindingResult.hasErrors()){
+            System.out.println(bindingResult.getAllErrors());
+            return "animals/add-animal/animal-information";
         }
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        animal.setUser(user.getUser());
 
-        User user = ((UserDetailsCustom)auth.getPrincipal()).getUser();
+        animalService.save(animal);
 
-        Animal animal = new Animal(name, LocalDate.parse(dateOfBirth, formatter), sex, species, breed, neutered, color, distinctiveMarks, microchip, bufferedOwner, user);
-
-        animalService.save(animal);*/
+        sessionStatus.setComplete();
 
         return "redirect:/animals";
     }
 
     @GetMapping("/add-animal/animal-information")
-    public String animalInformation(Animal animal, Owner owner, Model model) {
+    public String animalInformation(Animal animal, @SessionAttribute("owner")Owner owner, Model model) {
 
-        if(owner==null){
+        if(owner == null){
             return "redirect:/add-animal/owner-information";
         }
 
+        if(model.containsAttribute("animal")) {
+            animal = (Animal) model.getAttribute("animal");
+        }
+
+        animal.setOwner(owner);
+
         model.addAttribute("allSpecies", speciesService.findAll());
-        model.addAttribute("ownerFullName", owner.getLastName()+" "+owner.getFirstName());
+        model.addAttribute("animal", animal);
 
         return "animals/add-animal/animal-information";
     }
 
     @RequestMapping("/animals")
-    public String index(Animal animal, Model model) {
+    public String index(Model model) {
 
         model.addAttribute("animals", animalService.findAllAnimals());
+
         return "animals/animals";
     }
 }

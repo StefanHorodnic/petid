@@ -3,6 +3,23 @@
 <head>
     <div th:replace="fragments/header :: header"></div>
     <script type="text/javascript" th:src="@{/js/owner.js}"></script>
+    <script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    $(document).ready(function() {
+       var owner = [[${owner}]];
+
+       if(owner.id != null){
+            $("#lastName").prop("readonly", true);
+            $("#firstName").prop("readonly", true);
+            $("#address").prop("readonly", true);
+            $("#phone").prop("readonly", true);
+            $("#email").prop("readonly", true);
+       }
+    });
+
+    /*]]>*/
+    </script>
     <title>Adaugă animal</title>
 </head>
 <body>

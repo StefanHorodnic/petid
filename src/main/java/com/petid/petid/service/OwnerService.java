@@ -20,7 +20,7 @@ public class OwnerService {
     public Optional<Owner> findById(UUID id){
         if(id == null)
         {
-            return null;
+            return Optional.empty();
         }
         else {
             return ownerRepository.findById(id);

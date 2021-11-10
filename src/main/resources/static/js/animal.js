@@ -8,15 +8,15 @@ $(document).ready(function(){
 
 function updateBreedSelect() {
 
-    $("#breedSelect").empty();
+    $("#breed").empty();
 
-    var speciesId = $("#speciesSelect").val();
+    var speciesId = $("#species").val();
 
     $.get("/breedBySpeciesId?speciesId=" + speciesId, function(data){
-        $("#breedSelect").prop("disabled", false);
+/*      $("#breed").prop("disabled", false);*/
         $.each(data, function(key, value){
             var option = "<option value = " + key + ">" + value +  "</option>";
-            $("#breedSelect").append(option);
+            $("#breed").append(option);
         });
     });
 };
