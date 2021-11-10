@@ -3,7 +3,6 @@ package com.petid.petid.userdetails;
 import com.petid.petid.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.Collection;
 
 public class UserDetailsCustom implements UserDetails {

@@ -26,6 +26,7 @@ public class Owner{
     @NotEmpty(message = "Adaugă adresa")
     private String address;
     @NotEmpty(message = "Adaugă numărul de telefon")
+    @Pattern(regexp = "07[2-8]\\d{7}", message = "Numar de telefon invalid")
     private String phone;
     @NotEmpty(message = "Adaugă email-ul")
     @Email(message = "Trebuie să fie un mail valid")

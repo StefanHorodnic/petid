@@ -13,8 +13,6 @@ import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.time.format.DateTimeFormatter;
-import java.util.Formatter;
 import java.util.Set;
 import java.util.UUID;
 
@@ -59,12 +57,7 @@ public class Animal{
 
     public String getAge() {
 
-        System.out.println(dateOfBirth);
-        System.out.println(LocalDate.now());
-
         Period period = Period.between(dateOfBirth, LocalDate.now());
-
-        System.out.println(period);
 
         if (period.getYears()==0 && period.getMonths() < 3)
         {

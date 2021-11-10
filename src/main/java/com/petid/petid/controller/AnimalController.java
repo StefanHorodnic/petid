@@ -2,6 +2,7 @@ package com.petid.petid.controller;
 
 import com.petid.petid.model.*;
 import com.petid.petid.service.AnimalService;
+import com.petid.petid.service.SmsService;
 import com.petid.petid.service.SpeciesService;
 import com.petid.petid.userdetails.UserDetailsCustom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -23,6 +23,8 @@ public class AnimalController {
     private AnimalService animalService;
     @Autowired
     private SpeciesService speciesService;
+    @Autowired
+    private SmsService smsService;
 
     @PostMapping("/add-animal/animal-information")
     public String addAnimal(@Valid Animal animal, BindingResult bindingResult,
@@ -38,6 +40,8 @@ public class AnimalController {
         animal.setUser(user.getUser());
 
         animalService.save(animal);
+
+        smsService.sendAnimalSavedSms(animal);
 
         sessionStatus.setComplete();
 
