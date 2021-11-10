@@ -16,7 +16,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/allUsers")
-    public List<User> getAllAnimals(Model model) {
+    public List<User> getAllUsers(Model model) {
         return userService.findAll();
     }
 }

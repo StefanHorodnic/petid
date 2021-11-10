@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -22,7 +23,7 @@ public class BreedController {
 
     @GetMapping("/breedBySpeciesId")
     @ResponseBody
-    public HashMap<UUID, String> getBreedBySpeciesId(@RequestParam("speciesId") UUID speciesId){
+    public Map<UUID, String> getBreedBySpeciesId(@RequestParam("speciesId") UUID speciesId){
         Species species = speciesService.findById(speciesId);
         return breedService.findAllBySpecies(species);
     }

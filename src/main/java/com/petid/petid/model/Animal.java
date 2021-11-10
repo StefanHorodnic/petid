@@ -1,16 +1,20 @@
 package com.petid.petid.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.Formatter;
 import java.util.Set;
 import java.util.UUID;
 
@@ -23,13 +27,12 @@ public class Animal{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-    @NotNull
-    @NotEmpty
+    @NotEmpty(message = "Adaugă numele animalului")
     private String name;
-    @NotNull
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @NotNull(message = "Selectează data nașterii")
+    @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate dateOfBirth;
-    @NotNull
+    @NotNull(message = "Selectează sexul animalului")
     @Enumerated(EnumType.ORDINAL)
     private Sex sex;
     @ManyToOne
@@ -38,16 +41,14 @@ public class Animal{
     @ManyToOne
     @JoinColumn(name="BREED_ID", nullable=false)
     private Breed breed;
-    @NotNull
     private boolean neutered;
-    @NotNull
     private String color;
-    @NotNull
     private String distinctiveMarks;
-    @NotNull
+    @Size(min = 15, max = 15, message = "Microcipul trebuie să conțină exact 15 caractere")
+    @Digits(integer = 15, fraction = 0, message = "Microcipul trebuie să conțină doar cifre")
     private String microchip;
     @CreationTimestamp
-    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+    @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private LocalDateTime createdDateTime;
     @ManyToOne
     private Owner owner;
@@ -58,13 +59,18 @@ public class Animal{
 
     public String getAge() {
 
+        System.out.println(dateOfBirth);
+        System.out.println(LocalDate.now());
+
         Period period = Period.between(dateOfBirth, LocalDate.now());
 
-        if (period.getDays() < 7)
+        System.out.println(period);
+
+        if (period.getYears()==0 && period.getMonths() < 3)
         {
-            return period.getDays() + " zile";
-        }
-        else if(period.getMonths() < 3){
+            if(period.getDays() < 7){
+                return period.getDays() + " zile";
+            }
             return period.getDays() / 7 + " săptămâni";
         }
         else if(period.getYears() < 1){

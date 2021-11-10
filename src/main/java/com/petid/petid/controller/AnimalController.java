@@ -11,10 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
-@SessionAttributes("animal")
+@SessionAttributes({"animal","owner"})
 public class AnimalController {
 
     @Autowired
@@ -27,9 +29,9 @@ public class AnimalController {
                             Model model, @AuthenticationPrincipal UserDetailsCustom user, SessionStatus sessionStatus) {
 
         model.addAttribute("animal", animal);
+        model.addAttribute("allSpecies", speciesService.findAll());
 
         if(bindingResult.hasErrors()){
-            System.out.println(bindingResult.getAllErrors());
             return "animals/add-animal/animal-information";
         }
 
@@ -43,9 +45,9 @@ public class AnimalController {
     }
 
     @GetMapping("/add-animal/animal-information")
-    public String animalInformation(Animal animal, @SessionAttribute("owner")Owner owner, Model model) {
+    public String animalInformation(Animal animal, @SessionAttribute(name = "owner", required = false)Owner owner, Model model, HttpSession session) {
 
-        if(owner == null){
+        if(owner == null || owner.getId() == null){
             return "redirect:/add-animal/owner-information";
         }
 

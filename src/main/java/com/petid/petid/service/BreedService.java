@@ -6,9 +6,8 @@ import com.petid.petid.repository.BreedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BreedService {
@@ -24,12 +23,16 @@ public class BreedService {
         return breedRepository.findById(id).orElseThrow();
     }
 
-    public HashMap<UUID, String> findAllBySpecies(Species species){
-        List<Breed> breeds = breedRepository.findAllBySpecies(species);
-        HashMap<UUID, String> breedsHashMap = new HashMap<>();
+    public Map<UUID, String> findAllBySpecies(Species species){
+
+        List<Breed> breeds = breedRepository.findAllBySpecies(species).stream().sorted(Comparator.comparing(Breed::getName)).collect(Collectors.toList());
+
+        Map<UUID, String> breedsHashMap = new LinkedHashMap<>();
+
         for (Breed breed:breeds) {
             breedsHashMap.put(breed.getId(), breed.getName());
         }
+
         return breedsHashMap;
     }
 }

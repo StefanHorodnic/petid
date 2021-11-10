@@ -11,7 +11,11 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 @Component
 public class InitialData {
@@ -36,33 +40,33 @@ public class InitialData {
         speciesRepository.save(canine);
         speciesRepository.save(feline);
 
-        Breed ciobanescGerman = new Breed(canine, "Ciobănesc german");
-        Breed europeana = new Breed(feline, "Europeană");
+        try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get("breeds-canine.csv"), StandardCharsets.UTF_8)){
 
-        breedRepository.save(ciobanescGerman);
-        breedRepository.save(new Breed(canine, "Beagle"));
-        breedRepository.save(new Breed(canine, "Poodle"));
-        breedRepository.save(europeana);
-        breedRepository.save(new Breed(feline, "Persană"));
+            String line = bufferedReader.readLine();
 
-        Owner owner = new Owner("1234567891234", "Stefan", "Horodnic", "Cluj-Napoca", "0743510638", "stefanhorodnic@yahoo.com");
-        Owner owner2 = new Owner("1234567891235", "Andrei", "Porgras", "Iași", "0732564376", "andreiporgras@yahoo.com");
+            while(line != null){
+                breedRepository.save(new Breed(canine, line));
+                line = bufferedReader.readLine();
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        ownerRepository.save(owner);
-        ownerRepository.save(owner2);
+        try (BufferedReader bufferedReader = Files.newBufferedReader(Paths.get("breeds-feline.csv"), StandardCharsets.UTF_8)){
 
-        User user = new User("123", "stefan", "Ștefan Horodnic");
+            String line = bufferedReader.readLine();
 
-        userService.save(user);
+            while(line != null){
+                breedRepository.save(new Breed(feline, line));
+                line = bufferedReader.readLine();
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        userService.save(new User("123", "stefan", "Ștefan Horodnic"));
         userService.save(new User("456","andrei", "Andrei Porgras"));
-
-        animalRepository.save(new Animal("Maya", LocalDate.of(2014,04,15), Sex.Femelă, canine,
-                ciobanescGerman, true, "", "", "", owner, user));
-        animalRepository.save(new Animal("Bubico", LocalDate.of(2014,04,15), Sex.Mascul, canine,
-                ciobanescGerman, true, "", "", "", owner2,user));
-        animalRepository.save(new Animal("Luna", LocalDate.of(2014,04,15), Sex.Femelă, feline,
-                europeana, true, "", "", "", owner,user));
-        animalRepository.save(new Animal("Tom", LocalDate.of(2014,04,15), Sex.Mascul, feline,
-                europeana, true, "", "", "", owner2,user));
     }
 }
