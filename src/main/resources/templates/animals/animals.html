@@ -35,19 +35,17 @@
             <table id="animalsTable" class="table table-hover">
               <thead>
               <tr>
-                <th class="text-center" scope="col" hidden="true">#</th>
                 <th class="text-center" scope="col">Nume</th>
                 <th class="text-center" scope="col">Specie</th>
                 <th class="text-center" scope="col">Rasă</th>
                 <th class="text-center" scope="col">Vârstă</th>
                 <th class="text-center" scope="col">Microcip</th>
                 <th class="text-center" scope="col">Proprietar</th>
-                <th class="text-center" scope="col">Acțiuni</th>
+                <th class="text-center" scope="col">Fișă</th>
               </tr>
               </thead>
               <tbody>
               <tr th:each="animal : ${animals}">
-                <td class="text-center" th:text="${animal.id}" hidden="true"></td>
                 <td class="text-center" th:text="${animal.name}"></td>
                 <td class="text-center" th:text="${animal.species.name}"></td>
                 <td class="text-center" th:text="${animal.breed.name}"></td>
@@ -55,17 +53,11 @@
                 <td class="text-center" th:text="${animal.microchip}"></td>
                 <td class="text-center" th:text="${animal.owner.lastName + ' ' + animal.owner.firstName}"></td>
                 <td>
-                  <div class="dropdown">
-                    <a href="#" class="threeBars" data-toggle="dropdown">
-                      <div class="one"></div>
-                      <div class="two"></div>
-                      <div class="three"></div>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Deschide fișa</a></li>
-<!--                      <li><a class="dropdown-item" href="#">Schimbă proprietarul</a></li>-->
-                    </ul>
-                  </div>
+                  <a th:href="@{/animal/{microchip}(microchip=${animal.microchip})}" class="threeBars">
+                    <div class="one"></div>
+                    <div class="two"></div>
+                    <div class="three"></div>
+                  </a>
                 </td>
               </tr>
               </tbody>

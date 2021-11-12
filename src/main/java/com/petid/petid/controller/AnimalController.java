@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 @SessionAttributes({"animal","owner"})
@@ -41,7 +42,7 @@ public class AnimalController {
 
         animalService.save(animal);
 
-        smsService.sendAnimalSavedSms(animal);
+        //smsService.sendAnimalSavedSms(animal);
 
         sessionStatus.setComplete();
 
@@ -68,10 +69,26 @@ public class AnimalController {
     }
 
     @RequestMapping("/animals")
-    public String index(Model model) {
+    public String animals(Model model) {
 
-        model.addAttribute("animals", animalService.findAllAnimals());
+        model.addAttribute("animals", animalService.findAll());
 
         return "animals/animals";
+    }
+
+    @RequestMapping("animal/{microchip}")
+    public String animal(@PathVariable("microchip") String microchip, Model model) {
+
+        Optional<Animal> animal = animalService.findByMicrochip(microchip);
+
+        if(animal.isPresent()){
+
+            model.addAttribute("animal", animal);
+
+            return "animals/animal";
+        }
+        else{
+            return "redirect:/animals";
+        }
     }
 }
