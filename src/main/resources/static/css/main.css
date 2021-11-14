@@ -73,4 +73,25 @@
 	    line-height: 35px;
 	}
 
+	.profile-picture img{
+	    border-radius: 50%;
+	    max-width: 130px !important;
+	}
+
+	.profile .row{
+	    text-align: center;
+	}
+
+	.profile-group{
+	    margin-top: 10px;
+	}
+
+	.profile-group span{
+	    text-weight: bold;
+	}
+
+	.profile-group span span{
+	    text-weight: normal;
+	}
+
 

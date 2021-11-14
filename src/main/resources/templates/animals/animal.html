@@ -2,18 +2,127 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <div th:replace="fragments/header :: header"></div>
-    <title>Title</title>
+
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/animalRecordsTable.js}"></script>
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" th:href="@{/css/table.css}">
+
+    <title th:text="${animal.name}">Title</title>
 </head>
 <body>
     <div th:replace="fragments/navigation :: navigation"></div>
     <div class="container">
-        <div class="row">
-
+        <div class="profile">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="profile-picture" th:if="${animal.photo}">
+                        <img th:src="${(animal.photo != null &&
+                        !#strings.isEmpty(animal.photo)) ? animal.photo : '/images/animal.png'}" alt="">
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="profile-group">
+                        <span>
+                            Nume:
+                            <span th:text="${animal.name}"></span>
+                        </span>
+                    </div>
+                    <div class="profile-group">
+                        <span>
+                            Microcip:
+                            <span th:text="${animal.microchip}"></span>
+                        </span>
+                    </div>
+                    <div class="profile-group">
+                        <span>
+                            Specie:
+                            <span th:text="${animal.species.name}"></span>
+                        </span>
+                    </div>
+                    <div class="profile-group">
+                        <span>
+                            Rasă:
+                            <span th:text="${animal.breed.name}"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="profile-group">
+                        <span>
+                        Sex:
+                        <span th:text="${animal.neutered}? ${animal.sex} + ' (sterilizat)' : ${animal.sex} + ' (nesterilizat)' ">
+                        </span>
+                    </span>
+                    </div>
+                    <div class="profile-group">
+                        <span>
+                        Data nașterii:
+                        <span th:text="${animal.dateOfBirth}"></span>
+                    </span>
+                    </div >
+                    <div class="profile-group">
+                        <span>
+                            Vârstă:
+                            <span th:text="${animal.age}"></span>
+                        </span>
+                    </div>
+                    <div class="profile-group">
+                        <span>
+                            Proprietar:
+                            <span th:text="${animal.owner.lastName} + ' ' + ${animal.owner.firstName}"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="container">
-        <div class="row">
+        <div class="record">
+            <div class="row">
+                <div class="col-md-1 no-float">
+                </div>
+                <div class="col-md-4">
+                    <input id="searchRecords" class="form-control" type="text" placeholder="Caută.." style="margin-top: 20px;" th:onkeyup="searchTable()">
+                </div>
+                <div class="col-md-4 no-float"></div>
+                <div class="col-md-2">
+                    <a class="btn btn-primary" th:href="@{/}"><i class="fa fa-plus-circle"></i>Adaugă un eveniment</a>
+                </div>
+                <div class="col-md-1 no-float"></div>
+            </div>
+            <div class="row">
+                <div class="col-md-1 no-float"></div>
+                <div class="col-md-10">
+                    <div style="overflow-x:auto">
+                        <table id="animalRecordsTable" class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th class="text-center" scope="col">Data</th>
+                                <th class="text-center" scope="col">Eveniment</th>
+                                <th class="text-center" scope="col">Acțiuni</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="animalRecord : ${animalRecords}">
+                                <td class="text-center" th:text="${animalRecord.date}"></td>
+                                <td class="text-center" th:text="${animalRecord.text}"></td>
+                                <td>
+                                    <a th:href="@{/animal/{microchip}(microchip=${animal.microchip})}" class="threeBars">
+                                        <div class="one"></div>
+                                        <div class="two"></div>
+                                        <div class="three"></div>
+                                    </a>
+                                </td>
+                            </tr>
 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-1 no-float"></div>
+            </div>
         </div>
     </div>
 </body>

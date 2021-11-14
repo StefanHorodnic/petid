@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 
 @Component
 public class InitialData {
@@ -66,7 +67,17 @@ public class InitialData {
             e.printStackTrace();
         }
 
-        userService.save(new User("123", "stefan", "Ștefan Horodnic"));
-        userService.save(new User("456","andrei", "Andrei Porgras"));
+        User user = new User("123", "stefan", "Ștefan Horodnic");
+
+        userService.save(user);
+
+        Owner owner = new Owner("1234567891234", "Stefan", "Horodnic", "Mihai romanul", "0743510638", "stefanhorodnic@yahoo.com");
+
+        ownerRepository.save(owner);
+
+        Animal animal = new Animal("Strumfu", LocalDate.of(2015, 8, 1), Sex.Mascul, feline,
+                breedRepository.findByName("Europeană"), true, "Gri", "", "123456789123456", owner, user);
+
+        animalRepository.save(animal);
     }
 }

@@ -1,6 +1,7 @@
 package com.petid.petid.controller;
 
 import com.petid.petid.model.*;
+import com.petid.petid.service.AnimalRecordService;
 import com.petid.petid.service.AnimalService;
 import com.petid.petid.service.SmsService;
 import com.petid.petid.service.SpeciesService;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -26,6 +28,8 @@ public class AnimalController {
     private SpeciesService speciesService;
     @Autowired
     private SmsService smsService;
+    @Autowired
+    private AnimalRecordService animalRecordService;
 
     @PostMapping("/add-animal/animal-information")
     public String addAnimal(@Valid Animal animal, BindingResult bindingResult,
@@ -83,7 +87,11 @@ public class AnimalController {
 
         if(animal.isPresent()){
 
-            model.addAttribute("animal", animal);
+            model.addAttribute("animal", animal.get());
+
+            List<AnimalRecord> animalRecords = animalRecordService.findAllByAnimal(animal.get());
+
+            model.addAttribute("animalRecords", animalRecords);
 
             return "animals/animal";
         }

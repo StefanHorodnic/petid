@@ -10,4 +10,6 @@ import java.util.UUID;
 public interface BreedRepository extends JpaRepository<Breed, UUID> {
 
     List<Breed> findAllBySpecies(Species species);
+
+    Breed findByName(String name);
 }

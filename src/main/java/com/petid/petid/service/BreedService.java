@@ -23,6 +23,10 @@ public class BreedService {
         return breedRepository.findById(id).orElseThrow();
     }
 
+    public Breed findByName(String name){
+        return breedRepository.findByName(name);
+    }
+
     public Map<UUID, String> findAllBySpecies(Species species){
 
         List<Breed> breeds = breedRepository.findAllBySpecies(species).stream().sorted(Comparator.comparing(Breed::getName)).collect(Collectors.toList());

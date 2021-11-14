@@ -75,6 +75,11 @@
                             <input type="text" class="form-control" th:field="*{distinctiveMarks}">
                             <p th:if="${#fields.hasErrors('distinctiveMarks')}" th:errorclass="error" th:errors="*{distinctiveMarks}"></p>
                         </div>
+                        <div class="form-group">
+                            <label th:for="${#ids.next('photo')}">Poză</label>
+                            <input type="text" class="form-control" th:field="*{photo}">
+                            <p th:if="${#fields.hasErrors('photo')}" th:errorclass="error" th:errors="*{photo}"></p>
+                        </div>
                         <button type="submit" class="btn btn-primary">Salvează</button>
                     </form>
                 </div>

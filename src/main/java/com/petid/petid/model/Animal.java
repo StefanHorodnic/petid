@@ -42,6 +42,7 @@ public class Animal{
     private boolean neutered;
     private String color;
     private String distinctiveMarks;
+    @Column(unique=true, name = "microchip")
     @Size(min = 15, max = 15, message = "Microcipul trebuie să conțină exact 15 caractere")
     @Digits(integer = 15, fraction = 0, message = "Microcipul trebuie să conțină doar cifre")
     private String microchip;
@@ -52,6 +53,7 @@ public class Animal{
     private Owner owner;
     @ManyToOne
     private User user;
+    private String photo;
     @Transient
     private Set<AnimalRecord> records;
 
