@@ -10,9 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -33,7 +36,7 @@ public class AnimalController {
 
     @PostMapping("/add-animal/animal-information")
     public String addAnimal(@Valid Animal animal, BindingResult bindingResult,
-                            Model model, @AuthenticationPrincipal UserDetailsCustom user, SessionStatus sessionStatus) {
+                            Model model, @RequestParam("photo") MultipartFile photo, @AuthenticationPrincipal UserDetailsCustom user, SessionStatus sessionStatus) {
 
         model.addAttribute("animal", animal);
         model.addAttribute("allSpecies", speciesService.findAll());
@@ -41,6 +44,8 @@ public class AnimalController {
         if(bindingResult.hasErrors()){
             return "animals/add-animal/animal-information";
         }
+
+        animal.setPhoto(photo);
 
         animal.setUser(user.getUser());
 

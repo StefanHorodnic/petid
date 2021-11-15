@@ -17,9 +17,8 @@
         <div class="profile">
             <div class="row">
                 <div class="col-sm-4">
-                    <div class="profile-picture" th:if="${animal.photo}">
-                        <img th:src="${(animal.photo != null &&
-                        !#strings.isEmpty(animal.photo)) ? animal.photo : '/images/animal.png'}" alt="">
+                    <div class="profile-picture">
+                        <img th:src="${animal.photo}" alt="">
                     </div>
                 </div>
                 <div class="col-sm-4">

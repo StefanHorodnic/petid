@@ -5,11 +5,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -74,6 +82,27 @@ public class Animal{
         else{
             return period.getYears() + " ani";
         }
+    }
+
+    public String getPhoto(){
+        if(photo == null || photo.isEmpty()){
+            return "/images/animal.png";
+        }
+        return photo;
+    }
+
+    public void setPhoto(MultipartFile photo){
+
+        String fileName = StringUtils.cleanPath(photo.getOriginalFilename());
+
+        try {
+            Path path = Paths.get("static/images/");
+            Files.copy(photo.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        this.photo = "/images/"+fileName;
     }
 
     public Animal(String name,
