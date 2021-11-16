@@ -86,7 +86,7 @@ public class AnimalController {
     }
 
     @RequestMapping("animal/{microchip}")
-    public String animal(@PathVariable("microchip") String microchip, Model model) {
+    public String animal(@PathVariable("microchip") String microchip, Model model, SessionStatus sessionStatus) {
 
         Optional<Animal> animal = animalService.findByMicrochip(microchip);
 
@@ -97,6 +97,8 @@ public class AnimalController {
             List<AnimalRecord> animalRecords = animalRecordService.findAllByAnimal(animal.get());
 
             model.addAttribute("animalRecords", animalRecords);
+
+            sessionStatus.setComplete();
 
             return "animals/animal";
         }

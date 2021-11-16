@@ -1,5 +1,7 @@
 package com.petid.petid.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.petid.petid.Helper;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,6 +15,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -61,6 +64,7 @@ public class Animal{
     private Owner owner;
     @ManyToOne
     private User user;
+
     private String photo;
     @Transient
     private Set<AnimalRecord> records;
@@ -84,6 +88,7 @@ public class Animal{
         }
     }
 
+
     public String getPhoto(){
         if(photo == null || photo.isEmpty()){
             return "/images/animal.png";
@@ -96,13 +101,15 @@ public class Animal{
         String fileName = StringUtils.cleanPath(photo.getOriginalFilename());
 
         try {
-            Path path = Paths.get("static/images/");
-            Files.copy(photo.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            File targetFile = new File("/images/" + getMicrochip() + Helper.getExtension(fileName).get());
+
+            Files.copy(photo.getInputStream(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+            this.photo = "/images/" + getMicrochip() + Helper.getExtension(fileName).get();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        this.photo = "/images/"+fileName;
     }
 
     public Animal(String name,
