@@ -73,25 +73,35 @@
 	    line-height: 35px;
 	}
 
+	.profile-picture{
+        text-align: center;
+    }
+
 	.profile-picture img{
 	    border-radius: 50%;
-	    max-width: 130px !important;
+	    width: 150px;
+	    height: 150px;
 	}
 
-	.profile .row{
+    .profile .row{
 	    text-align: center;
 	}
 
+    @media (min-width: 768px){
+	    .profile .row{
+	        text-align: initial;
+	    }
+	}
+
 	.profile-group{
-	    margin-top: 10px;
+	    margin-top: 15px;
 	}
 
-	.profile-group span{
-	    text-weight: bold;
+	.profile-group-label{
+	    font-weight: bold;
 	}
 
-	.profile-group span span{
-	    text-weight: normal;
-	}
-
+	.profile-group-value{
+    	font-weight: normal;
+    }
 

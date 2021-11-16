@@ -23,54 +23,54 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="profile-group">
-                        <span>
+                        <span class="profile-group-label">
                             Nume:
-                            <span th:text="${animal.name}"></span>
+                            <span class="profile-group-value" th:text="${animal.name}"></span>
                         </span>
                     </div>
                     <div class="profile-group">
-                        <span>
+                        <span class="profile-group-label">
                             Microcip:
-                            <span th:text="${animal.microchip}"></span>
+                            <span class="profile-group-value" th:text="${animal.microchip}"></span>
                         </span>
                     </div>
                     <div class="profile-group">
-                        <span>
+                        <span class="profile-group-label">
                             Specie:
-                            <span th:text="${animal.species.name}"></span>
+                            <span class="profile-group-value" th:text="${animal.species.name}"></span>
                         </span>
                     </div>
                     <div class="profile-group">
-                        <span>
+                        <span class="profile-group-label">
                             Rasă:
-                            <span th:text="${animal.breed.name}"></span>
+                            <span class="profile-group-value" th:text="${animal.breed.name}"></span>
                         </span>
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="profile-group">
-                        <span>
+                        <span class="profile-group-label">
                         Sex:
-                        <span th:text="${animal.neutered}? ${animal.sex} + ' (sterilizat)' : ${animal.sex} + ' (nesterilizat)' ">
+                        <span class="profile-group-value" th:text="${animal.neutered}? ${animal.sex} + ' (sterilizat)' : ${animal.sex} + ' (nesterilizat)' ">
                         </span>
                     </span>
                     </div>
                     <div class="profile-group">
-                        <span>
+                        <span class="profile-group-label">
                         Data nașterii:
-                        <span th:text="${animal.dateOfBirth}"></span>
+                        <span class="profile-group-value" th:text="${animal.dateOfBirth}"></span>
                     </span>
                     </div >
                     <div class="profile-group">
-                        <span>
+                        <span class="profile-group-label">
                             Vârstă:
-                            <span th:text="${animal.age}"></span>
+                            <span class="profile-group-value" th:text="${animal.age}"></span>
                         </span>
                     </div>
                     <div class="profile-group">
-                        <span>
+                        <span class="profile-group-label">
                             Proprietar:
-                            <span th:text="${animal.owner.lastName} + ' ' + ${animal.owner.firstName}"></span>
+                            <span class="profile-group-value" th:text="${animal.owner.lastName} + ' ' + ${animal.owner.firstName}"></span>
                         </span>
                     </div>
                 </div>

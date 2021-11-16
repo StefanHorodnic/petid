@@ -1,8 +1,6 @@
 package com.petid.petid.model;
 
-import com.fasterxml.jackson.datatype.jdk8.OptionalDoubleSerializer;
 import com.petid.petid.Helper;
-import jdk.javadoc.doclet.Doclet;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,9 +14,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.File;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.file.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -98,10 +93,10 @@ public class Animal{
         String fileName = StringUtils.cleanPath(photo.getOriginalFilename());
 
         try {
-
             //First we save to disk
             //We have to get the path to the static directory of the target directory not the src directory
             Path targetPath = Paths.get(getClass().getResource("").toURI()).getParent().getParent().getParent().getParent(); // not sure if this is the best way but it works
+            //Then we add the path to the images directory and the file name;
             Path path = Paths.get(targetPath+"/static/images/"+getMicrochip()+Helper.getExtension(fileName).get());
             Files.copy(photo.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
             //Then we save to database
