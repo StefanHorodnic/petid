@@ -1,7 +1,8 @@
 package com.petid.petid.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.datatype.jdk8.OptionalDoubleSerializer;
 import com.petid.petid.Helper;
+import jdk.javadoc.doclet.Doclet;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,10 +18,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.net.URISyntaxException;
+import java.nio.file.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -64,7 +63,6 @@ public class Animal{
     private Owner owner;
     @ManyToOne
     private User user;
-
     private String photo;
     @Transient
     private Set<AnimalRecord> records;
@@ -88,7 +86,6 @@ public class Animal{
         }
     }
 
-
     public String getPhoto(){
         if(photo == null || photo.isEmpty()){
             return "/images/animal.png";
@@ -101,13 +98,16 @@ public class Animal{
         String fileName = StringUtils.cleanPath(photo.getOriginalFilename());
 
         try {
-            File targetFile = new File("/images/" + getMicrochip() + Helper.getExtension(fileName).get());
 
-            Files.copy(photo.getInputStream(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            //First we save to disk
+            //We have to get the path to the static directory of the target directory not the src directory
+            Path targetPath = Paths.get(getClass().getResource("").toURI()).getParent().getParent().getParent().getParent(); // not sure if this is the best way but it works
+            Path path = Paths.get(targetPath+"/static/images/"+getMicrochip()+Helper.getExtension(fileName).get());
+            Files.copy(photo.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            //Then we save to database
+            this.photo = "/images/"+getMicrochip()+Helper.getExtension(fileName).get();
 
-            this.photo = "/images/" + getMicrochip() + Helper.getExtension(fileName).get();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
