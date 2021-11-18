@@ -3,7 +3,9 @@ $(document).ready(function(){
         format: 'dd.mm.yyyy'
     });
 
-    updateBreedSelect();
+    if( $('#breed').has('option').length == 0 ){
+        updateBreedSelect();
+    }
 })
 
 

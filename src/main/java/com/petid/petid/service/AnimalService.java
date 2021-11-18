@@ -36,4 +36,14 @@ public class AnimalService {
     public Optional<Animal> findByMicrochip(String microchip) {
         return animalRepository.findByMicrochip(microchip);
     }
+
+    public Optional<Animal> findByMicrochip(String microchip, UUID id){
+
+        Optional<Animal> otherAnimal = findByMicrochip(microchip);
+
+        if(!otherAnimal.isPresent() || otherAnimal.get().getId().equals(id)){
+            return Optional.empty();
+        }
+        return otherAnimal;
+    }
 }

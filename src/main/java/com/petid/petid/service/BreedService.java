@@ -39,4 +39,8 @@ public class BreedService {
 
         return breedsHashMap;
     }
+
+    public List<Breed> listAllBySpecies(Species species){
+        return breedRepository.findAllBySpecies(species).stream().sorted(Comparator.comparing(Breed::getName)).collect(Collectors.toList());
+    }
 }

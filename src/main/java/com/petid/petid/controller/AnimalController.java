@@ -1,16 +1,14 @@
 package com.petid.petid.controller;
 
 import com.petid.petid.model.*;
-import com.petid.petid.service.AnimalRecordService;
-import com.petid.petid.service.AnimalService;
-import com.petid.petid.service.SmsService;
-import com.petid.petid.service.SpeciesService;
+import com.petid.petid.service.*;
 import com.petid.petid.userdetails.UserDetailsCustom;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +27,8 @@ public class AnimalController {
     @Autowired
     private SpeciesService speciesService;
     @Autowired
+    private BreedService breedService;
+    @Autowired
     private SmsService smsService;
     @Autowired
     private AnimalRecordService animalRecordService;
@@ -38,19 +38,15 @@ public class AnimalController {
                             Model model, @RequestParam(name="photo", required = false) MultipartFile photo,
                             @AuthenticationPrincipal UserDetailsCustom user, SessionStatus sessionStatus) {
 
-        System.out.println("This is in add");
-
         model.addAttribute("animal", animal);
         model.addAttribute("allSpecies", speciesService.findAll());
 
-        if(bindingResult.hasErrors()){
-            return "animals/add-animal/animal-information";
+        if(animalService.findByMicrochip(animal.getMicrochip()).isPresent()){
+            bindingResult.addError(new FieldError("animal", "microchip","Microcipul introdus există deja în baza de date."));
         }
 
-        System.out.println(photo);
-
-        if(photo != null) {
-            animal.setPhoto(photo);
+        if(bindingResult.hasErrors()){
+            return "animals/add-animal/animal-information";
         }
 
         animal.setUser(user.getUser());
@@ -85,9 +81,11 @@ public class AnimalController {
     }
 
     @RequestMapping("/animals")
-    public String animals(Model model) {
+    public String animals(Model model, SessionStatus sessionStatus) {
 
         model.addAttribute("animals", animalService.findAll());
+
+        sessionStatus.setComplete();
 
         return "animals/animals";
     }
@@ -122,10 +120,9 @@ public class AnimalController {
         if(animal.isPresent()){
 
             model.addAttribute("allSpecies", speciesService.findAll());
+            model.addAttribute("breedsBySpecies", breedService.listAllBySpecies(animal.get().getSpecies()));
             model.addAttribute("animal", animal.get());
             model.addAttribute("action", "edit");
-
-            sessionStatus.setComplete();
 
             return "animals/add-animal/animal-information";
         }
@@ -136,28 +133,26 @@ public class AnimalController {
 
     @PostMapping("/edit-animal/animal-information")
     public String editAnimalPost(@Valid Animal animal, BindingResult bindingResult, Model model, @RequestParam(name="photo", required = false) MultipartFile photo,
-                                 SessionStatus sessionStatus) {
+                                 @SessionAttribute(name = "animal", required = false)Animal oldAnimal, SessionStatus sessionStatus) {
+
+        animal.setOwner(oldAnimal.getOwner());
+        animal.setUser(oldAnimal.getUser());
+        animal.setCreatedDateTime(oldAnimal.getCreatedDateTime());
 
         model.addAttribute("animal", animal);
         model.addAttribute("allSpecies", speciesService.findAll());
+        model.addAttribute("breedsBySpecies", breedService.listAllBySpecies(animal.getSpecies()));
+        model.addAttribute("action", "edit");
+
+        if(animalService.findByMicrochip(animal.getMicrochip(), animal.getId()).isPresent()){
+            bindingResult.addError(new FieldError("animal", "microchip","Microcipul introdus există deja în baza de date."));
+        }
 
         if(bindingResult.hasErrors()){
             return "animals/add-animal/animal-information";
         }
 
-        Animal editedAnimal = animalService.findById(animal.getId()).get();
-
-        editedAnimal.setName(animal.getName());
-        editedAnimal.setBreed(animal.getBreed());
-        editedAnimal.setSpecies(animal.getSpecies());
-        editedAnimal.setColor(animal.getColor());
-        editedAnimal.setDistinctiveMarks(animal.getDistinctiveMarks());
-        editedAnimal.setDateOfBirth(animal.getDateOfBirth());
-        editedAnimal.setNeutered(animal.isNeutered());
-        editedAnimal.setSex(animal.getSex());
-        editedAnimal.setPhoto(photo);
-
-        animalService.save(editedAnimal);
+        animalService.save(animal);
 
         sessionStatus.setComplete();
 

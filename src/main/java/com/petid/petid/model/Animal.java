@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+import org.junit.jupiter.api.MethodOrderer;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import java.nio.file.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
+import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -47,7 +49,6 @@ public class Animal{
     private boolean neutered;
     private String color;
     private String distinctiveMarks;
-    @Column(unique=true, name = "microchip")
     @Size(min = 15, max = 15, message = "Microcipul trebuie să conțină exact 15 caractere")
     @Digits(integer = 15, fraction = 0, message = "Microcipul trebuie să conțină doar cifre")
     private String microchip;
@@ -88,7 +89,6 @@ public class Animal{
         return photo;
     }
 
-
     public void setPhoto(MultipartFile photo){
 
         String fileName = StringUtils.cleanPath(photo.getOriginalFilename());
@@ -96,14 +96,27 @@ public class Animal{
         if(!fileName.isEmpty())
         {
             try {
+                String name;
+
+                if(getPhoto().equals("/images/animal.png"))
+                {
+                    UUID id = UUID.randomUUID();
+                    String extension = Helper.getExtension(fileName).get();
+
+                    name = id + extension;
+                }
+                else{
+                    name = getPhoto().substring(8); //little hack to remove the '/images/' part
+                }
+
                 //First we save to disk
                 //We have to get the path to the static directory of the target directory not the src directory
                 Path targetPath = Paths.get(getClass().getResource("").toURI()).getParent().getParent().getParent().getParent(); // not sure if this is the best way but it works
                 //Then we add the path to the images directory and the file name;
-                Path path = Paths.get(targetPath+"/static/images/"+getMicrochip()+Helper.getExtension(fileName).get());
+                Path path = Paths.get(targetPath+"/static/images/" + name);
                 Files.copy(photo.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
                 //Then we save to database
-                this.photo = "/images/"+getMicrochip()+Helper.getExtension(fileName).get();
+                this.photo = "/images/" + name;
 
             } catch (Exception e) {
                 e.printStackTrace();
