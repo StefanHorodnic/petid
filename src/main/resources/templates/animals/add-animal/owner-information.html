@@ -4,21 +4,6 @@
     <div th:replace="fragments/header :: header"></div>
     <script type="text/javascript" th:src="@{/js/owner.js}"></script>
     <script type="text/javascript" th:inline="javascript">
-    /*<![CDATA[*/
-
-    $(document).ready(function() {
-       var owner = [[${owner}]];
-
-       if(owner.id != null){
-            $("#lastName").prop("readonly", true);
-            $("#firstName").prop("readonly", true);
-            $("#address").prop("readonly", true);
-            $("#phone").prop("readonly", true);
-            $("#email").prop("readonly", true);
-       }
-    });
-
-    /*]]>*/
     </script>
     <title>Adaugă animal</title>
 </head>
@@ -26,44 +11,46 @@
     <div th:replace="fragments/navigation :: navigation"></div>
     <div class="container">
         <div class="row">
-            <h3>Pasul 1: Informații despre proprietar</h3>
+            <h3 th:text="${action} == 'add' ? 'Pasul 1: Informații despre proprietar' : 'Modifică proprietar'"></h3>
         </div>
         <div class="row">
             <div class="col-md-4 no-float"></div>
             <div class="col-md-4">
-                <form id="ownerInformationForm" th:action="@{/add-animal/owner-information}" th:object="${owner}" method="post">
+                <form id="ownerInformationForm" th:action="${action} == 'add' ? @{/add-animal/owner-information} : @{/edit-owner/owner-information}"
+                      th:object="${owner}" method="post">
                     <input type="hidden" th:field="*{id}">
+                    <input type="hidden" id="mode" th:value="${action}">
                     <div class="form-group">
                         <label th:for="${#ids.next('socialSecurityNumber')}">C.N.P.</label>
-                        <input type="text" class="form-control" th:onkeyup="ownerBySocialSecurityNumber()" th:field="*{socialSecurityNumber}">
+                        <input type="text" class="form-control" onkeyup="ownerBySocialSecurityNumber()" th:field="*{socialSecurityNumber}">
                         <p th:if="${#fields.hasErrors('socialSecurityNumber')}" th:errorclass="error" th:errors="*{socialSecurityNumber}"></p>
                     </div>
                     <div class="form-group">
                         <label th:for="${#ids.next('lastName')}">Nume</label>
-                        <input type="text" class="form-control" th:field="*{lastName}">
+                        <input th:readonly="${action} == 'add' ? 'true' : 'false'" type="text" class="form-control" th:field="*{lastName}">
                         <p th:if="${#fields.hasErrors('lastName')}" th:errorclass="error" th:errors="*{lastName}"></p>
                     </div>
                     <div class="form-group">
                         <label th:for="${#ids.next('firstName')}">Prenume</label>
-                        <input type="text" class="form-control" th:field="*{firstName}">
+                        <input th:readonly="${action} == 'add' ? 'true' : 'false'" type="text" class="form-control" th:field="*{firstName}">
                         <p th:if="${#fields.hasErrors('firstName')}" th:errorclass="error" th:errors="*{firstName}"></p>
                     </div>
                     <div class="form-group">
                         <label th:for="${#ids.next('address')}">Adresă</label>
-                        <input type="text" class="form-control" th:field="*{address}">
+                        <input th:readonly="${action} == 'add' ? 'true' : 'false'" type="text" class="form-control" th:field="*{address}">
                         <p th:if="${#fields.hasErrors('address')}" th:errorclass="error" th:errors="*{address}"></p>
                     </div>
                     <div class="form-group">
                         <label th:for="${#ids.next('phone')}">Telefon</label>
-                        <input type="text" class="form-control" th:field="*{phone}" pattern="07[2-8]\d{7}">
+                        <input th:readonly="${action} == 'add' ? 'true' : 'false'" type="text" class="form-control" th:field="*{phone}" pattern="07[2-8]\d{7}">
                         <p th:if="${#fields.hasErrors('phone')}" th:errorclass="error" th:errors="*{phone}"></p>
                     </div>
                     <div class="form-group">
                         <label th:for="${#ids.next('email')}">Email</label>
-                        <input type="text" class="form-control" th:field="*{email}">
+                        <input th:readonly="${action} == 'add' ? 'true' : 'false'" type="text" class="form-control" th:field="*{email}">
                         <p th:if="${#fields.hasErrors('email')}" th:errorclass="error" th:errors="*{email}"></p>
                     </div>
-                    <button type="submit" class="btn btn-primary">Continuă</button>
+                    <button th:text="${action} == 'add' ? 'Continuă' : 'Salvează'" type="submit" class="btn btn-primary">Continuă</button>
                 </form>
             </div>
             <div class="col-md-4 no-float"></div>
