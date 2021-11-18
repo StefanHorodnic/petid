@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
@@ -36,7 +35,10 @@ public class AnimalController {
 
     @PostMapping("/add-animal/animal-information")
     public String addAnimal(@Valid Animal animal, BindingResult bindingResult,
-                            Model model, @RequestParam("photo") MultipartFile photo, @AuthenticationPrincipal UserDetailsCustom user, SessionStatus sessionStatus) {
+                            Model model, @RequestParam(name="photo", required = false) MultipartFile photo,
+                            @AuthenticationPrincipal UserDetailsCustom user, SessionStatus sessionStatus) {
+
+        System.out.println("This is in add");
 
         model.addAttribute("animal", animal);
         model.addAttribute("allSpecies", speciesService.findAll());
@@ -45,7 +47,11 @@ public class AnimalController {
             return "animals/add-animal/animal-information";
         }
 
-        animal.setPhoto(photo);
+        System.out.println(photo);
+
+        if(photo != null) {
+            animal.setPhoto(photo);
+        }
 
         animal.setUser(user.getUser());
 
@@ -59,7 +65,7 @@ public class AnimalController {
     }
 
     @GetMapping("/add-animal/animal-information")
-    public String animalInformation(Animal animal, @SessionAttribute(name = "owner", required = false)Owner owner, Model model, HttpSession session) {
+    public String addAnimalInformation(Animal animal, @SessionAttribute(name = "owner", required = false)Owner owner, Model model, HttpSession session) {
 
         if(owner == null || owner.getId() == null){
             return "redirect:/add-animal/owner-information";
@@ -73,6 +79,7 @@ public class AnimalController {
 
         model.addAttribute("allSpecies", speciesService.findAll());
         model.addAttribute("animal", animal);
+        model.addAttribute("action", "add");
 
         return "animals/add-animal/animal-information";
     }
@@ -105,5 +112,55 @@ public class AnimalController {
         else{
             return "redirect:/animals";
         }
+    }
+
+    @RequestMapping("/edit-animal/{microchip}")
+    public String editAnimalInformation(@PathVariable("microchip") String microchip, Model model, SessionStatus sessionStatus){
+
+        Optional<Animal> animal = animalService.findByMicrochip(microchip);
+
+        if(animal.isPresent()){
+
+            model.addAttribute("allSpecies", speciesService.findAll());
+            model.addAttribute("animal", animal.get());
+            model.addAttribute("action", "edit");
+
+            sessionStatus.setComplete();
+
+            return "animals/add-animal/animal-information";
+        }
+        else{
+            return "redirect:/animals";
+        }
+    }
+
+    @PostMapping("/edit-animal/animal-information")
+    public String editAnimalPost(@Valid Animal animal, BindingResult bindingResult, Model model, @RequestParam(name="photo", required = false) MultipartFile photo,
+                                 SessionStatus sessionStatus) {
+
+        model.addAttribute("animal", animal);
+        model.addAttribute("allSpecies", speciesService.findAll());
+
+        if(bindingResult.hasErrors()){
+            return "animals/add-animal/animal-information";
+        }
+
+        Animal editedAnimal = animalService.findById(animal.getId()).get();
+
+        editedAnimal.setName(animal.getName());
+        editedAnimal.setBreed(animal.getBreed());
+        editedAnimal.setSpecies(animal.getSpecies());
+        editedAnimal.setColor(animal.getColor());
+        editedAnimal.setDistinctiveMarks(animal.getDistinctiveMarks());
+        editedAnimal.setDateOfBirth(animal.getDateOfBirth());
+        editedAnimal.setNeutered(animal.isNeutered());
+        editedAnimal.setSex(animal.getSex());
+        editedAnimal.setPhoto(photo);
+
+        animalService.save(editedAnimal);
+
+        sessionStatus.setComplete();
+
+        return "redirect:/animals";
     }
 }

@@ -6,6 +6,16 @@ $(document).ready(function(){
     updateBreedSelect();
 })
 
+
+function onPictureChange(){
+
+    const[file] = photo.files;
+
+      if (file) {
+        photoPreview.src = URL.createObjectURL(file)
+    }
+}
+
 function updateBreedSelect() {
 
     $("#breed").empty();

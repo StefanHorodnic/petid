@@ -22,12 +22,7 @@ public class AnimalService {
     }
 
     public List<Animal> findAll(){
-
         return animalRepository.findAll();
-    }
-
-    public Animal update(Animal animal){
-        return animalRepository.save(animal);
     }
 
     public void deleteById(UUID id){

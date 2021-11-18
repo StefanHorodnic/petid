@@ -88,22 +88,26 @@ public class Animal{
         return photo;
     }
 
+
     public void setPhoto(MultipartFile photo){
 
         String fileName = StringUtils.cleanPath(photo.getOriginalFilename());
 
-        try {
-            //First we save to disk
-            //We have to get the path to the static directory of the target directory not the src directory
-            Path targetPath = Paths.get(getClass().getResource("").toURI()).getParent().getParent().getParent().getParent(); // not sure if this is the best way but it works
-            //Then we add the path to the images directory and the file name;
-            Path path = Paths.get(targetPath+"/static/images/"+getMicrochip()+Helper.getExtension(fileName).get());
-            Files.copy(photo.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            //Then we save to database
-            this.photo = "/images/"+getMicrochip()+Helper.getExtension(fileName).get();
+        if(!fileName.isEmpty())
+        {
+            try {
+                //First we save to disk
+                //We have to get the path to the static directory of the target directory not the src directory
+                Path targetPath = Paths.get(getClass().getResource("").toURI()).getParent().getParent().getParent().getParent(); // not sure if this is the best way but it works
+                //Then we add the path to the images directory and the file name;
+                Path path = Paths.get(targetPath+"/static/images/"+getMicrochip()+Helper.getExtension(fileName).get());
+                Files.copy(photo.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                //Then we save to database
+                this.photo = "/images/"+getMicrochip()+Helper.getExtension(fileName).get();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -62,7 +62,7 @@
                        </a>
                       <div class="dropdown-menu" x-placement="bottom-end" style="position: absolute">
                         <li><a class="dropdown-item" th:href="@{/animal/{microchip}(microchip=${animal.microchip})}">Deschide fișa</a></li>
-                        <li><a class="dropdown-item" href="#">Editează animalul</a></li>
+                        <li><a class="dropdown-item" th:href="@{/edit-animal/{microchip}(microchip=${animal.microchip})}">Editează animalul</a></li>
                         <li><a class="dropdown-item" href="#">Editează proprietarul</a></li>
                       </div>
                     </div>
