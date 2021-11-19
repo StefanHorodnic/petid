@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.junit.jupiter.api.MethodOrderer;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +18,6 @@ import java.nio.file.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
-import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
 
@@ -61,7 +59,7 @@ public class Animal{
     private User user;
     private String photo;
     @Transient
-    private Set<AnimalRecord> records;
+    private Set<Record> records;
 
     public String getAge() {
 

@@ -1,6 +1,7 @@
 package com.petid.petid.controller;
 
 import com.petid.petid.model.*;
+import com.petid.petid.model.Record;
 import com.petid.petid.service.*;
 import com.petid.petid.userdetails.UserDetailsCustom;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class AnimalController {
     @Autowired
     private SmsService smsService;
     @Autowired
-    private AnimalRecordService animalRecordService;
+    private RecordService recordService;
 
     @PostMapping("/add-animal/animal-information")
     public String addAnimal(@Valid Animal animal, BindingResult bindingResult,
@@ -46,7 +47,7 @@ public class AnimalController {
         }
 
         if(bindingResult.hasErrors()){
-            return "animals/add-animal/animal-information";
+            return "animal-information";
         }
 
         animal.setUser(user.getUser());
@@ -77,7 +78,7 @@ public class AnimalController {
         model.addAttribute("animal", animal);
         model.addAttribute("action", "add");
 
-        return "animals/add-animal/animal-information";
+        return "animal-information";
     }
 
     @RequestMapping("/animals")
@@ -87,7 +88,7 @@ public class AnimalController {
 
         sessionStatus.setComplete();
 
-        return "animals/animals";
+        return "animals";
     }
 
     @RequestMapping("animal/{microchip}")
@@ -99,13 +100,13 @@ public class AnimalController {
 
             model.addAttribute("animal", animal.get());
 
-            List<AnimalRecord> animalRecords = animalRecordService.findAllByAnimal(animal.get());
+            List<Record> records = recordService.findAllByAnimal(animal.get());
 
-            model.addAttribute("animalRecords", animalRecords);
+            model.addAttribute("records", records);
 
             sessionStatus.setComplete();
 
-            return "animals/animal";
+            return "animal";
         }
         else{
             return "redirect:/animals";
@@ -124,7 +125,7 @@ public class AnimalController {
             model.addAttribute("animal", animal.get());
             model.addAttribute("action", "edit");
 
-            return "animals/add-animal/animal-information";
+            return "animal-information";
         }
         else{
             return "redirect:/animals";
@@ -149,7 +150,7 @@ public class AnimalController {
         }
 
         if(bindingResult.hasErrors()){
-            return "animals/add-animal/animal-information";
+            return "animal-information";
         }
 
         animalService.save(animal);

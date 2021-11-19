@@ -22,6 +22,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
+                    <input type="hidden" th:field="${animal.id}">
                     <div class="profile-group">
                         <span class="profile-group-label">
                             Nume:
@@ -87,7 +88,7 @@
                 </div>
                 <div class="col-md-4 no-float"></div>
                 <div class="col-md-2">
-                    <a class="btn btn-primary" th:href="@{/}"><i class="fa fa-plus-circle"></i>Adaugă un eveniment</a>
+                    <a class="btn btn-primary" th:href="@{/add-record/record-information/{animalId}(animalId=${animal.id})}"><i class="fa fa-plus-circle"></i>Adaugă un eveniment</a>
                 </div>
                 <div class="col-md-1 no-float"></div>
             </div>
@@ -104,15 +105,23 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="animalRecord : ${animalRecords}">
-                                <td class="text-center" th:text="${animalRecord.date}"></td>
-                                <td class="text-center" th:text="${animalRecord.text}"></td>
+                            <tr th:each="record : ${records}">
+                                <td class="text-center" th:text="${record.date}"></td>
+                                <td class="text-center" th:text="${record.text}"></td>
                                 <td>
-                                    <a th:href="@{/animal/{microchip}(microchip=${animal.microchip})}" class="threeBars">
-                                        <div class="one"></div>
-                                        <div class="two"></div>
-                                        <div class="three"></div>
-                                    </a>
+                                    <span style="overflow: visible;">
+                                        <div class="dropdown position-static actions d-inline-block">
+                                            <a href="#" class="threeBars" data-toggle="dropdown">
+                                                <div class="one"></div>
+                                                <div class="two"></div>
+                                                <div class="three"></div>
+                                            </a>
+                                            <div class="dropdown-menu" x-placement="bottom-end" style="position: absolute">
+                                                <li><a class="dropdown-item" th:href="@{/edit-record/{id}(id=${record.id})}">Editează</a></li>
+                                                <li><a class="dropdown-item" th:href="@{/delete-record/{id}(id=${record.id})}">Șterge</a></li>
+                                            </div>
+                                        </div>
+                                     </span>
                                 </td>
                             </tr>
 

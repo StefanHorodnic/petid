@@ -37,7 +37,7 @@ public class OwnerController {
         model.addAttribute("action", "add");
 
         if(bindingResult.hasErrors()){
-            return "animals/add-animal/owner-information";
+            return "owner-information";
         }
 
         if(owner.getId()==null) {
@@ -57,7 +57,7 @@ public class OwnerController {
         model.addAttribute("owner", owner);
         model.addAttribute("action", "add");
 
-        return "animals/add-animal/owner-information";
+        return "owner-information";
     }
 
     @RequestMapping("/edit-owner/{id}")
@@ -68,7 +68,7 @@ public class OwnerController {
         model.addAttribute("owner", owner);
         model.addAttribute("action", "edit");
 
-        return "animals/add-animal/owner-information";
+        return "owner-information";
     }
 
     @PostMapping("/edit-owner/owner-information")
@@ -84,7 +84,7 @@ public class OwnerController {
         }
 
         if(bindingResult.hasErrors()){
-            return "animals/add-animal/owner-information";
+            return "owner-information";
         }
 
         ownerService.save(owner);

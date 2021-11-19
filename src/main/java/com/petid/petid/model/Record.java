@@ -6,9 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -19,40 +17,38 @@ import java.util.UUID;
 @Setter
 @Getter
 @NoArgsConstructor
-public class AnimalRecord {
+public class Record {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
     @DateTimeFormat(pattern = "dd.MM.yyyy")
     private LocalDate date;
     @NotNull
     private String text;
+    @ManyToOne
+    @JoinColumn(name="USER_ID", nullable=false)
+    private User user;
+    @ManyToOne
+    @JoinColumn(name="ANIMAL_ID", nullable=false)
+    private Animal animal;
     @CreationTimestamp
     @DateTimeFormat(pattern = "dd.MM.yyyy HH:mm")
     private LocalDateTime createdDateTime;
-    @ManyToOne
-    private User createdBy;
-    @ManyToOne
-    private Animal animal;
 
-    public AnimalRecord(UUID id, LocalDate date, String text, LocalDateTime createdDateTime, User createdBy, Animal animal) {
-        this.id = id;
+    public Record(LocalDate date, String text, User user, Animal animal) {
         this.date = date;
         this.text = text;
-        this.createdDateTime = createdDateTime;
-        this.createdBy = createdBy;
+        this.user = user;
         this.animal = animal;
     }
 
     @Override
     public String toString() {
-        return "AnimalRecord{" +
+        return "Record{" +
                 "id=" + id +
                 ", date=" + date +
                 ", text='" + text + '\'' +
-                ", createdDateTime=" + createdDateTime +
-                ", createdBy=" + createdBy +
-                ", animal=" + animal +
                 '}';
     }
 }
